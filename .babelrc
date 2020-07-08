@@ -1,0 +1,13 @@
+{
+    "presets": [
+        ["@babel/preset-env",{
+            "useBuiltIns":"usage", 
+            "corejs":3
+        }],
+        "@babel/preset-react" // 顺序从下往上 先走解析react
+    ],
+    "plugins": [
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["@babel/plugin-proposal-class-properties",{"loose":true}]       
+    ]
+}
