@@ -15,3 +15,8 @@ export async function getThemeConfigJson(params) {
     let result = await requestGet(`${E.SERVER_HOME}Configs/GetThemeConfig`,params)
     return result
 }
+// 获取目录权限
+export async function getAccountRightsJson(params) {
+    let result = await requestGet(`${E.SERVER_HOME}Power/GetAccountRights`,params)
+    return result
+}

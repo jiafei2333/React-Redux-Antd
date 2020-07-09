@@ -1,5 +1,5 @@
 import React from 'react';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.less';
 import { Form, Input, Button } from 'antd';
 import {Link} from 'react-router-dom';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -37,7 +37,7 @@ const Login = (props) => {
         <a className={'checkPas'} onClick={()=>{}}>忘记密码？</a>
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" size="large"  loading={true} className={'btn'}>登录</Button>
+        <Button type="primary" htmlType="submit" size="large"  loading={false} className={'btn'}>登录</Button>
         <Button size="large" style={{color: "#222"}} className={'btn'}><Link to="/register">申请入驻</Link></Button>
       </Form.Item>
     </Form>

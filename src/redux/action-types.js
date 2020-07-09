@@ -1,3 +1,4 @@
 
-export const LOGIN_ADD = 'LOGIN_ADD';
-export const SetParams = 'SetParams';
+export const SET_PARAMS = 'SET_PARAMS';
+
+export const GET_MENU = 'GET_MENU';
