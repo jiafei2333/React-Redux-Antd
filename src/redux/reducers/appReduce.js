@@ -10,7 +10,7 @@ const initialState = {
 export default function(state=initialState, action){
     const {type, payload} = action;
     switch(type){
-        case types.SetParams:
+        case types.SET_PARAMS:
             return {
                 ...state,
                 [`${payload['paramsName']}`]: payload.paramsValue

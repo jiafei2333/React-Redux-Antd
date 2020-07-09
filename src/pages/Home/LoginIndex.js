@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {bindActionCreators} from 'redux';
+// import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import { Card } from 'antd';
 import get from 'lodash/get';
 import './style.less';
-
 import Login from './components/Login';
-import {LoginPost, getSiteConfig, getThemeConfig} from 'Redux/actions/home';
+import {GET_SITE_CONFIG, GET_THEME_CONFIG, POST_LOGIN_IN} from 'Redux/action-types';
+// import {LoginPost, getSiteConfig, getThemeConfig} from 'Redux/actions/home';
 
 
 const tabListNoTitle = [{
@@ -29,15 +29,15 @@ export class LoginIndex extends Component {
     }
     /** 生命周期*********************************** */
     componentDidMount(){
-        this.props.actions.getSiteConfig();
-        this.props.actions.getThemeConfig();
+        this.props.getSiteConfig();
+        this.props.getThemeConfig();
     }
     /** 生命周期*********************************** */
     onTabChange = (key) =>{
 
     }
     onSubmit(value){
-        this.props.actions.LoginPost({userName: value.username, password: value.password});
+        this.props.postLoginIn({userName: value.username, password: value.password});
     }
     render() {
         const {siteConfig} = this.props;
@@ -78,7 +78,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        actions: bindActionCreators({LoginPost, getSiteConfig, getThemeConfig}, dispatch),
+        getSiteConfig: ()=> dispatch({type: GET_SITE_CONFIG}),
+        getThemeConfig: ()=> dispatch({type: GET_THEME_CONFIG}),
+        postLoginIn: (data) => dispatch({type: POST_LOGIN_IN,payload:data})
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LoginIndex);

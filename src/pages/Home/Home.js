@@ -25,9 +25,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch =>{
     return {
-        getTest:()=>{
-            dispatch({type:GET_MENU});
-        },
+        getTest:() => dispatch({type:GET_MENU})
     }
 }
 

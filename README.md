@@ -218,6 +218,82 @@ export const PrivateRoute = ({path, component, history}) => {
 export default PrivateRoute;
 ```
 
+## 2.4 使用redux-saga
+
+关于为什么将redux-thunk换成redux-saga，及redux-saga的知识点查看 #5.1 #5.2
+
+src/redux/sagas/rootSaga.js
+```javascript
+// 登录
+function * watchPostLoginIn(){
+    while(true){
+        const action = yield take(types.POST_LOGIN_IN);
+        // 这里action返回的就是页面上dispatch的内容
+        const all = yield call(homeServer.getLoginAdd, action.payload);
+        if(all.Code === 0){ // 登录成功跳转到首页
+            // 存储token
+            setToken(all.Data.Token);
+            // 登录成功跳转到首页
+            yield put(push('/'));
+            // 如果要存储数据 这里走reducers
+            yield put({type: SET_PARAMS, payload:{...}});
+        }
+    }
+}
+export default function* rootSaga() {
+    yield fork(watchPostLoginIn);
+}
+```
+
+/src/store/store.js
+```javascript
+import {createStore, applyMiddleware, compose} from 'redux';
++import createSagaMiddleware from 'redux-saga';
+import logger from 'redux-logger';
+import { createBrowserHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router';
+import rootReducers from 'Redux/reducers/reducer';
++import rootSagas from 'Redux/sagas/rootSaga';
+
+// 创建一个saga中间件
++const sagaMiddleware = createSagaMiddleware()
+
+export const history = createBrowserHistory();
+
+const initialState = {};
+
+const store = createStore(
+    rootReducers(history),
+    initialState, 
+    compose(
+        applyMiddleware(
+            routerMiddleware(history), 
++            sagaMiddleware, // 将sagaMiddleware 中间件传入到 applyMiddleware 函数中
+            logger
+        )
+    )
+);
+
+// 动态执行saga，注意：run函数只能在store创建好之后调用
++sagaMiddleware.run(rootSagas)
+
+export default store;
+```
+
+src/pages/Home/LoginIndex.js
+```javascript
+onSubmit(value){
+    this.props.postLoginIn({userName: value.username, password: value.password});
+}
+...
+const mapDispatchToProps = dispatch => {
+    return {
+        postLoginIn: (data) => dispatch({type: POST_LOGIN_IN,payload:data})
+    }
+}
+```
+
+
 # 3. 疑问
 
 
@@ -295,7 +371,7 @@ import 'antd/dist/antd.less';
 当前版本 `"less-loader": "^6.1.0"`，查了之后都说v6有兼容性问题，所以将版本改为`"less-loader": "5.0.0",`,这样就可以了，没有报错。
 
 
-# 5. 拓展
+# 5. 知识点
 
 ## 5.1 redux-thunk
 
