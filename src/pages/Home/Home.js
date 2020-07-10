@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import MainLayout from 'Components/Base/MainLayout';
 import {GET_MENU} from 'Redux/action-types';
 
 export class Home extends Component {
@@ -12,9 +11,9 @@ export class Home extends Component {
     }
     render() {
         return (
-            <MainLayout>
+            <div>
                 home page
-            </MainLayout>
+            </div>
         )
     }
 }

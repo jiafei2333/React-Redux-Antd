@@ -45,6 +45,7 @@ function checkStatus(response){
     error.code = response.status;
     error.response = response;
     error.obj = response.json();
+    window.location.href='/login';
     throw error;
 }
 function parseJSON(response, opt) {
@@ -98,7 +99,7 @@ function _fetch(url, options){
     .then(checkStatus)
     .then(res=>parseJSON(res, newOptions))
     .then(res=>{
-        console.log("request res:",res);
+        // console.log("request res:",res);
         if(res.Code !== 0){
             message.error(res.Message)
             throw res.Message;
