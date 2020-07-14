@@ -335,6 +335,110 @@ export default RouteApp;
 `import './style.less';` 直接引入
 `className='class的名字'` 
 
+## 3.3 全局下的菜单栏数据
+
+我的想法是没有做数据交互的组件都写成函数组件，所以这里写顶部菜单栏组件一开始写的是函数组件，如下：
+```javascript
+import React from 'react';
+import { Layout, Menu } from 'antd';
+import {E} from 'Config/E';
+
+const { Header, Content, Footer } = Layout;
+
+const MainLayout = ({store, history, children}) =>{
+    const appReducers = store.getState();
+    let isLoginIn = window.localStorage.getItem(`${E.SERVER_TOKEN}token`);
+    return (
+        <>
+        {
+            !isLoginIn ? 
+                <>{children}</> 
+                :
+                <Layout className="layout">
+                {
+                    appReducers.mainMenu ? 
+                    <Header>
+                        <div className="logo" />
+                        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+                            <Menu.Item key="1">nav 1</Menu.Item>
+                            <Menu.Item key="2">nav 2</Menu.Item>
+                            <Menu.Item key="3">nav 3</Menu.Item>
+                        </Menu>
+                    </Header> : ""
+                }
+                    <Content style={{ padding: '0 50px' }}>
+                        {children}
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                </Layout>
+            }
+        </>
+        
+    )
+}
+export default MainLayout;
+```
+但是当首页componentDidMount中获取数据，redux reducer数据改变，页面没有更新，所以只能改为Class Component，如下：
+```javascript
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
+import { Layout, Menu } from 'antd';
+import {E} from 'Config/E';
+
+const { Header, Content, Footer } = Layout;
+
+export class MainLayout extends Component {
+    constructor(props){
+        super(props);
+        this.isLoginIn = window.localStorage.getItem(`${E.SERVER_TOKEN}token`);
+    }
+    render() {
+        const {mainMenu, children} = this.props;
+        return (
+            <>
+            {
+                !this.isLoginIn ? 
+                    <>{children}</> 
+                    :
+                    <Layout className="layout">
+                    {
+                        mainMenu ? 
+                        <Header>
+                            <div className="logo" />
+                            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+                                {
+                                    mainMenu.map((item)=>{
+                                        return (
+                                        <Menu.Item key={item.ModeCode}><Link key={item.ModeCode} to={item.ModeUrl}>{item.ModeName}</Link></Menu.Item>
+                                        )
+                                    })
+                                }
+                            </Menu>
+                        </Header> : ""
+                    }
+                        <Content style={{ padding: '0 50px' }}>
+                            {children}
+                        </Content>
+                        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                    </Layout>
+                }
+            </>
+        )
+    }
+}
+
+const mapStateToProps = (state) => ({
+    mainMenu: state.appReduce.mainMenu
+})
+
+const mapDispatchToProps = {
+    
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MainLayout)
+```
+当mainMenu数据变化的时候页面菜单自动刷新显示。
+
 # 4. 报错
 
 ## 4.1 ant 引入.less后缀的样式文件
@@ -502,5 +606,5 @@ takeLatest('login',loginFunc)
 - 1.全局loading
 - 2.按钮的loading
 - 3.nprogress未完
-- 4.saga代替thunk
+- 4.<s>saga代替thunk</s> （完成）
 - 5.配置node后台接口

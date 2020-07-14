@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-// import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import { Card } from 'antd';
 import get from 'lodash/get';
 import './style.less';
 import Login from './components/Login';
 import {GET_SITE_CONFIG, GET_THEME_CONFIG, POST_LOGIN_IN} from 'Redux/action-types';
-// import {LoginPost, getSiteConfig, getThemeConfig} from 'Redux/actions/home';
 
 
 const tabListNoTitle = [{
@@ -23,15 +21,49 @@ export class LoginIndex extends Component {
         this.state = {  
             key: 'tab1', 
             noTitleKey: 'login' ,
-            number: 0
+            number: 0,
+            // siteConfig: this.props.siteConfig
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
     /** 生命周期*********************************** */
     componentDidMount(){
+        console.log("LoginIndex componentDidMount ---- ");
         this.props.getSiteConfig();
         this.props.getThemeConfig();
     }
+    // static getDerivedStateFromProps(nextProps, prevState){
+    //     console.log("getDerivedStateFromProps:", nextProps, prevState,'---:',Reflect.has(prevState.siteConfig, 'RegionsCode'), prevState.siteConfig !== nextProps.siteConfig);
+    //     if( Reflect.has(prevState.siteConfig, 'RegionsCode') === false && prevState.siteConfig !== nextProps.siteConfig){
+    //         console.log("getDerivedStateFromProps --------------------------------------");
+    //         return {
+    //             siteConfig: nextProps.siteConfig
+    //         }
+    //     }
+    //     return null;
+    // }
+    // shouldComponentUpdate(nextProps, nextState){
+    //     // debugger;
+    //     // console.log("shouldComponentUpdate:", nextProps, nextState, this.state,Reflect.has(this.state.siteConfig, 'RegionsCode'), this.state.siteConfig !== nextProps.siteConfig);
+    //     // if( Reflect.has(this.state.siteConfig, 'RegionsCode') === false && this.state.siteConfig !== nextProps.siteConfig){
+    //     //     console.log("shouldComponentUpdate:——————————————————————————————————————————————————————————————")
+    //     //     this.setState({siteConfig: nextProps.siteConfig},function(){console.log("line51++++++++++++++++++++++++++++++++++++",this.state.siteConfig)});
+    //     //     return true;
+    //     // }
+    //     // return false;
+    //     console.log("shouldComponentUpdate:", this.props, nextProps);
+    //     return true;
+    // }
+    // getSnapshotBeforeUpdate(prevProps, prevState){
+    //     console.log("getSnapshotBeforeUpdate:", prevProps, prevState);
+    //     // debugger;
+    //     return null;
+    // }
+    // componentDidUpdate(prevProps, prevState, snapShot){
+    //     // debugger;
+    //     console.log("componentDidUpdate:", prevProps, prevState, snapShot);
+    // }
+
     /** 生命周期*********************************** */
     onTabChange = (key) =>{
 
@@ -45,6 +77,9 @@ export class LoginIndex extends Component {
             background: `url(${get(siteConfig, "LoginPage.Background")})`,
           }
         const contentListNoTitle = { login: <Login onSubmit={this.onSubmit} />, weixin: <div>2</div> };
+
+        console.log("LoginIndex:---props:", this.props);
+        console.log("LoginIndex:---state:",siteConfig, get(siteConfig, "LoginPage.BottomImage"))
         return (
             <div className='loginIndex' style={loginBgStyle}>
                 <div>

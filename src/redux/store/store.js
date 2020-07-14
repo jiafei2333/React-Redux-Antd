@@ -19,8 +19,8 @@ const store = createStore(
     compose(
         applyMiddleware(
             routerMiddleware(history), 
-            sagaMiddleware, // 将sagaMiddleware 中间件传入到 applyMiddleware 函数中
-            logger
+            logger,
+            sagaMiddleware // 将sagaMiddleware 中间件传入到 applyMiddleware 函数中
         )
     )
 );
