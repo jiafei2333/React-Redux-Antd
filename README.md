@@ -584,6 +584,13 @@ takeLatest('login',loginFunc)
 在任何时刻 takeLatest 只允许执行一个 loginFunc 任务，并且这个任务是最后被启动的那个，如果之前已经有一个任务在执行，那之前的这个任务会自动被取消。
 
 
+# 6. 功能模块
+
+新增独立的功能模块
+
+## 6.1 采编中心
+
+src/pages/EditorialCenter
 
 
 
@@ -596,7 +603,7 @@ takeLatest('login',loginFunc)
 
 # 6. 相关文章
 
-1. https://juejin.im/post/5b4de4496fb9a04fc226a7af#heading-9
+1. https://juejin.im/post/5b4de4496fb9a04fc226a7af
 2. https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
 3. https://juejin.im/post/5b440f7ae51d45195759f345
 
@@ -606,5 +613,10 @@ takeLatest('login',loginFunc)
 - 1.全局loading
 - 2.按钮的loading
 - 3.nprogress未完
-- 4.<s>saga代替thunk</s> （完成）
-- 5.配置node后台接口
+- 4.<s>saga代替thunk</s>（完成）
+- 5.配置node后台服务
+- 6.antd中局部修改默认样式
+- 7.<s>react-hot-loader</s>（完成一半，在saga中修改还是会完全刷新）
+    目的是为了解决，页面自动刷新导致react 组件的状态丢失。
+- 8.强制刷新时入口文件获取基本信息(菜单权限、配置信息等等)
+- 9.路由监听

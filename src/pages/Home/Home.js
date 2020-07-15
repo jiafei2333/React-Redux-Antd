@@ -7,9 +7,11 @@ export class Home extends Component {
         super(props);
     }
     componentDidMount(){
+        console.log("Component Home.js componentDidMount")
         this.props.getTest();
     }
     render() {
+        console.log("Component Home.js")
         return (
             <div>
                 home page

@@ -28,7 +28,7 @@ export class LoginIndex extends Component {
     }
     /** 生命周期*********************************** */
     componentDidMount(){
-        console.log("LoginIndex componentDidMount ---- ");
+        console.log("LoginIndex componentDidMount ----------------- ");
         this.props.getSiteConfig();
         this.props.getThemeConfig();
     }

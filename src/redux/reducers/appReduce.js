@@ -15,6 +15,14 @@ export default function(state=initialState, action){
                 ...state,
                 [`${payload['paramsName']}`]: payload.paramsValue
             }
+            break;
+        // case '@@router/LOCATION_CHANGE':
+        //     console.log("路由监听 change----------------------------------")
+        //     // return {
+        //     //     ...state
+        //     // }
+        //     return state;
+        //     break;
         default:
             return state;
     }

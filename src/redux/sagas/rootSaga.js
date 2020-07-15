@@ -48,9 +48,18 @@ function * watchGetAccountRights(){
         }
     }
 } 
+// function * watchRouter(){
+//     while(true){
+//         yield take('@@router/LOCATION_CHANGE');
+//         console.log("路由change saga");
+//         return true;
+//     }
+// } 
 export default function* rootSaga() {
+    // console.log("路由监控-----------------------");
     yield fork(watchGetAccountRights);
     yield fork(watchPostLoginIn);
     yield fork(watchGetSiteConfig);
     yield fork(watchGetThemeConfig);
+    // yield fork(watchRouter);
 }
