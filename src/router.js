@@ -8,6 +8,7 @@ import Page404 from 'Pages/404';
 import LoginIndex from 'Pages/Home/LoginIndex';
 import PrivateRoute from 'Components/Base/PrivateRoute';
 import MainLayout from 'Components/Base/MainLayout';
+import {GET_MENU} from 'Redux/action-types';
 
 const RouteApp = ({history})=>{
     const Routes = [
@@ -45,7 +46,8 @@ const RouteApp = ({history})=>{
 };
 
 const App = ({history, store}) =>{
-    console.log("App----------------------------");
+    console.log("App----------------------------完全刷新");
+    
     // 监听路由
     history.listen((location, action) => {
         let currUrl = `${location.pathname}${location.search}${location.hash}`;

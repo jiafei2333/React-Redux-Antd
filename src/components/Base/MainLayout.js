@@ -58,6 +58,7 @@ export class MainLayout extends Component {
     render() {
         const {mainMenu, children, siteConfig, history} = this.props;
         console.log("MainLayout------------------------------",this.props);
+        console.log("MainLayout: ",history.location.pathname === '/login', history.location);
         return (
             <>
             {

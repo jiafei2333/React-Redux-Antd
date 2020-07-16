@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {GET_MENU} from 'Redux/action-types';
+// import {GET_MENU} from 'Redux/action-types';
 
 export class Home extends Component {
     constructor(props){
         super(props);
     }
     componentDidMount(){
-        console.log("Component Home.js componentDidMount")
-        this.props.getTest();
+        // console.log("Component Home.js componentDidMount")
+        // this.props.getTest();
     }
     render() {
         console.log("Component Home.js")
@@ -25,9 +25,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch =>{
-    return {
-        getTest:() => dispatch({type:GET_MENU})
-    }
+    return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

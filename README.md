@@ -520,6 +520,8 @@ function* fetchProducts() {
 }
 ```
 call 是一个会阻塞的 Effect。即 Generator 在调用结束之前不能执行或处理任何其他事情。
+call 不仅可以用来调用返回 Promise 的函数。我们也可以用它来调用其他 Generator 函数。 
+fork表示无阻塞调用。
 
 ### 5.2.2 take
 
@@ -564,6 +566,7 @@ const state= yield select()
 ### 5.2.5 fork
 
 fork方法相当于web work，fork方法不会阻塞主线程，在非阻塞调用中十分有用。
+当我们 fork 一个 任务，任务会在后台启动，调用者也可以继续它自己的流程，而不用等待被 fork 的任务结束。
 
 ### 5.2.6 takeEvery和takeLatest
 
@@ -618,5 +621,5 @@ src/pages/EditorialCenter
 - 6.antd中局部修改默认样式
 - 7.<s>react-hot-loader</s>（完成一半，在saga中修改还是会完全刷新）
     目的是为了解决，页面自动刷新导致react 组件的状态丢失。
-- 8.强制刷新时入口文件获取基本信息(菜单权限、配置信息等等)
+- 8.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）
 - 9.路由监听

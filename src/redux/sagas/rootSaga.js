@@ -13,53 +13,63 @@ function * watchPostLoginIn(){
         if(all.Code === 0){ // 登录成功跳转到首页
             // 存储token
             setToken(all.Data.Token);
-            //dispatch(push("/"));
+            // 跳转到首页
             yield put(push('/'));
+            // 获取菜单权限
+            yield call(GetAccountRights); // fork无阻塞调用 如果这里用call 的话，call 是一个会阻塞的 Effect，即在watchPostLoginIn在watchGetAccountRights中被阻塞了。
         }
     }
 }
+
 // 获取站点基础配置项
 function * watchGetSiteConfig(){
     while(true){
         yield take(types.GET_SITE_CONFIG);
-        const all = yield call(homeServer.getProjectSettings);
-        if(all.Code === 0){ // 存储配置数据
-            yield put({type: SET_PARAMS, payload:{paramsName: 'siteConfig', paramsValue: all.Data}});
-        }
+        yield call(GetSiteConfig);
+    }
+}
+function * GetSiteConfig(){
+    const all = yield call(homeServer.getProjectSettings);
+    if(all.Code === 0){ // 存储配置数据
+        yield put({type: SET_PARAMS, payload:{paramsName: 'siteConfig', paramsValue: all.Data}});
     }
 }
 // 站点配置主题色获取
 function * watchGetThemeConfig(){
     while(true){
         yield take(types.GET_THEME_CONFIG);
-        const all = yield call(homeServer.getThemeConfigJson);
-        if(all.Code === 0){ // 存储配置数据
-            yield put({type: SET_PARAMS, payload:{paramsName: 'colorTheme', paramsValue: all.Data.ConfigValue}});
-        }
+        yield call(GetThemeConfig);
+    }
+}
+function * GetThemeConfig(){
+    const all = yield call(homeServer.getThemeConfigJson);
+    if(all.Code === 0){ // 存储配置数据
+        yield put({type: SET_PARAMS, payload:{paramsName: 'colorTheme', paramsValue: all.Data.ConfigValue}});
     }
 }
 // 获取菜单权限
-function * watchGetAccountRights(){
-    while(true){
-        yield take(types.GET_MENU);
-        const all = yield call(homeServer.getAccountRightsJson);
-        if(all.Code === 0){
-            yield put({type:types.SET_PARAMS, payload: {paramsName: 'mainMenu', paramsValue: all.Data}});
-        }
+function * GetAccountRights(){
+    const all = yield call(homeServer.getAccountRightsJson);
+    if(all.Code === 0){
+        yield put({type:types.SET_PARAMS, payload: {paramsName: 'mainMenu', paramsValue: all.Data}});
     }
 } 
-// function * watchRouter(){
-//     while(true){
-//         yield take('@@router/LOCATION_CHANGE');
-//         console.log("路由change saga");
-//         return true;
-//     }
-// } 
+// 页面刷新基础配置
+function * watchBaseFetch(){
+    let pathname = window.location.pathname;
+    console.log("pathname:------",pathname);
+    if(pathname !== '/login'){
+        yield fork(GetAccountRights);
+        yield fork(GetSiteConfig);
+        yield fork(GetThemeConfig);
+    }
+}
 export default function* rootSaga() {
-    // console.log("路由监控-----------------------");
-    yield fork(watchGetAccountRights);
+    console.log("Saga中页面刷新----------------")
+    //yield fork(watchGetAccountRights); // watchGetAccountRights 里没有用take来监听某个类型，所以页面完全熟悉你的时候可以自动调用 从而获取菜单栏
+    yield fork(watchBaseFetch);
+    // 下面这些里面都加了take 等待action被调用 
     yield fork(watchPostLoginIn);
     yield fork(watchGetSiteConfig);
     yield fork(watchGetThemeConfig);
-    // yield fork(watchRouter);
 }
