@@ -439,6 +439,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(MainLayout)
 ```
 当mainMenu数据变化的时候页面菜单自动刷新显示。
 
+<!-- ## 3.4 BrowserRouter 改为 HashRouter
+
+当使用<BrowserRouter>做路由时，首先开启
+```json
+devServer:{
+    historyApiFallback: true,    
+},
+```
+在开发环境下，<Link>可以跳转的路径，刷新页面，当前路径下的页面不会报Not Found。
+现在当我要访问 `/editorialCenter/auditing/auditLevel`时，<Link>可以访问，刷新页面报错，如下：
+
+![](https://jiafei2333.github.io/html/images/Error：react-router-BrowserRouter01.png "")
+只有`/editorialCenter` 一级时，刷新页面可以访问到，当多级时报错，找了很久都解决不了，所以现在将路由改为了HashRouter...... -->
+
 # 4. 报错
 
 ## 4.1 ant 引入.less后缀的样式文件
@@ -604,14 +618,14 @@ src/pages/EditorialCenter
 
 
 
-# 6. 相关文章
+# 7. 相关文章
 
 1. https://juejin.im/post/5b4de4496fb9a04fc226a7af
 2. https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
 3. https://juejin.im/post/5b440f7ae51d45195759f345
 
 
-# 7. 未完成功能
+# 8. 未完成功能
 
 - 1.全局loading
 - 2.按钮的loading
@@ -622,4 +636,6 @@ src/pages/EditorialCenter
 - 7.<s>react-hot-loader</s>（完成一半，在saga中修改还是会完全刷新）
     目的是为了解决，页面自动刷新导致react 组件的状态丢失。
 - 8.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）
-- 9.路由监听
+- 9.路由监听，拼接路由
+- 10.hooks封装模块
+- 11.动态加载组件（react-loadable）

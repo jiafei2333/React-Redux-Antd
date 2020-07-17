@@ -3,7 +3,7 @@ import {Route, Redirect} from 'react-router-dom';
 import {E} from 'Config/E';
 
 
-export const PrivateRoute = ({path, component, history}) => {
+export const PrivateRoute = ({path, component: Com, history}) => {
     let isLoginIn = window.localStorage.getItem(`${E.SERVER_TOKEN}token`);
     // console.log("PrivateRoute history:",history);
     // console.log("PrivateRoute store:",store);
@@ -17,7 +17,9 @@ export const PrivateRoute = ({path, component, history}) => {
     
     // console.log("isLoginIn2:",isLoginIn);
     return (
-        <Route exact path={path} component={component} />
+        <Route exact path={path} render={()=>{
+            return <Com />
+        }} />
     )
     
 }
