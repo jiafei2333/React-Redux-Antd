@@ -636,6 +636,6 @@ src/pages/EditorialCenter
 - 7.<s>react-hot-loader</s>（完成一半，在saga中修改还是会完全刷新）
     目的是为了解决，页面自动刷新导致react 组件的状态丢失。
 - 8.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）
-- 9.路由监听，拼接路由
+- 9.<s>路由监听，拼接路由</s>（完成）
 - 10.hooks封装模块
 - 11.动态加载组件（react-loadable）

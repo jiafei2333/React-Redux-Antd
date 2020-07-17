@@ -1,4 +1,4 @@
-import * as types from '../action-types';
+import * as types from 'Redux/action-types';
 
 const initialState = {
     siteConfig: {}, // 站点配置

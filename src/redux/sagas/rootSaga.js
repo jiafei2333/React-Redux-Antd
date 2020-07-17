@@ -1,9 +1,9 @@
-import {take,all,fork,put,call,takeEvery} from 'redux-saga/effects';
+import {take,fork,put,call,select} from 'redux-saga/effects';
 import {push} from 'connected-react-router';
 import * as types from '../action-types';
 import * as homeServer from '../actionServer/home';
-import {setToken} from 'Util/commonFun';
-import {SET_PARAMS } from '../action-types';
+import {setToken, routeListen} from 'Util/commonFun';
+import {SET_PARAMS, SET_PARAMS_ROUTER } from '../action-types';
 
 // 登录
 function * watchPostLoginIn(){
@@ -52,6 +52,12 @@ function * GetAccountRights(){
     const all = yield call(homeServer.getAccountRightsJson);
     if(all.Code === 0){
         yield put({type:types.SET_PARAMS, payload: {paramsName: 'mainMenu', paramsValue: all.Data}});
+        // 如果不是/首页，则更新路由
+        let store = yield select();
+        let _obj = routeListen(store.appReduce, store.routerReducer);
+        if(_obj !== false){
+            yield put({type: types.SET_PARAMS_ROUTER, payload: _obj});
+        }
     }
 } 
 // 页面刷新基础配置
