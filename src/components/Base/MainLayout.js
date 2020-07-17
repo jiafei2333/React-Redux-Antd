@@ -58,7 +58,7 @@ export class MainLayout extends Component {
     render() {
         const {mainMenu, children, siteConfig, history} = this.props;
         console.log("MainLayout------------------------------",this.props);
-        console.log("MainLayout: ",history.location.pathname === '/login', history.pathname);
+        console.log("MainLayout: ",history.location.pathname === '/login', history.location);
         return (
             <>
             {
@@ -73,11 +73,11 @@ export class MainLayout extends Component {
                                 </Link>
                             </div>
                             <Header>
-                                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+                                <Menu theme="dark" mode="horizontal" selectedKeys={[history.location.pathname]}>
                                     {
                                         map(mainMenu, item=>{
                                             return (
-                                                <Menu.Item key={item.ModeCode}><Link key={item.ModeCode} to={item.ModeUrl}>{item.ModeName}</Link></Menu.Item>
+                                                <Menu.Item key={item.ModeUrl}><Link key={item.ModeCode} to={item.ModeUrl}>{item.ModeName}</Link></Menu.Item>
                                             )
                                         })
                                         

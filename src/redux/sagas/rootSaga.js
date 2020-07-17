@@ -63,7 +63,6 @@ function * GetAccountRights(){
 // 页面刷新基础配置
 function * watchBaseFetch(){
     let pathname = window.location.pathname;
-    console.log("pathname:------",pathname);
     if(pathname !== '/login'){
         yield fork(GetAccountRights);
         yield fork(GetSiteConfig);

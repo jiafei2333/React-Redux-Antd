@@ -1,7 +1,7 @@
 import * as types from 'Redux/action-types';
 import Home from 'Pages/Home/Home';
 import LoginIndex from 'Pages/Home/LoginIndex';
-import AuditLevel from 'Pages/EditorialCenter/Auditing/AuditLevel';
+import {AuditLevel, AuditPending, TobeEditedManuscript, AnnulsManuscript, InstitutionalRepository, ManuscriptFeedboxPublic, ManuscriptSubmitted} from 'Pages/EditorialCenter/index';
 
 const initialState = {
     routeData: [
@@ -16,9 +16,39 @@ const initialState = {
             component: LoginIndex,
         },
         {
-            path: '/editorialCenter/gathering/manuFeedboxPublic',
+            path: '/editorialCenter/auditing/auditLevel',
             needAuth: true,
             component: AuditLevel
+        },
+        {
+            path: '/editorialCenter/auditing/auditPending',
+            needAuth: true,
+            component: AuditPending
+        },
+        {
+            path: '/editorialCenter/edit/tobeEditedManuscript',
+            needAuth: true,
+            component: TobeEditedManuscript
+        },
+        {
+            path: '/editorialCenter/gathering/annulsManuscript',
+            needAuth: true,
+            component: AnnulsManuscript
+        },
+        {
+            path: '/editorialCenter/gathering/InstitutionalRepository',
+            needAuth: true,
+            component: InstitutionalRepository
+        },
+        {
+            path: '/editorialCenter/gathering/manuFeedboxPublic',
+            needAuth: true,
+            component: ManuscriptFeedboxPublic
+        },
+        {
+            path: '/editorialCenter/gathering/manuscriptsubmitted',
+            needAuth: true,
+            component: ManuscriptSubmitted
         }
     ]
 };
