@@ -5,6 +5,8 @@ import AnnulsManuscript from './Gathering/AnnulsManuscript';
 import InstitutionalRepository from './Gathering/InstitutionalRepository';
 import ManuscriptFeedboxPublic from './Gathering/ManuscriptFeedboxPublic';
 import ManuscriptSubmitted from './Gathering/ManuscriptSubmitted';
+import AllManuscript from './issue/AllManuscript';
+import TobeIssuedManuscript from './issue/TobeIssuedManuscript';
 
 export {
     AuditLevel,
@@ -13,5 +15,7 @@ export {
     AnnulsManuscript,
     InstitutionalRepository,
     ManuscriptFeedboxPublic,
-    ManuscriptSubmitted
+    ManuscriptSubmitted,
+    AllManuscript,
+    TobeIssuedManuscript
 }

@@ -1,7 +1,8 @@
 import * as types from 'Redux/action-types';
 import Home from 'Pages/Home/Home';
 import LoginIndex from 'Pages/Home/LoginIndex';
-import {AuditLevel, AuditPending, TobeEditedManuscript, AnnulsManuscript, InstitutionalRepository, ManuscriptFeedboxPublic, ManuscriptSubmitted} from 'Pages/EditorialCenter/index';
+import {AuditLevel, AuditPending, TobeEditedManuscript, AnnulsManuscript, InstitutionalRepository, ManuscriptFeedboxPublic, ManuscriptSubmitted,AllManuscript,TobeIssuedManuscript} from 'Pages/EditorialCenter/index';
+import {dynamicsUrl} from 'Util/commonFun';
 
 const initialState = {
     routeData: [
@@ -49,19 +50,31 @@ const initialState = {
             path: '/editorialCenter/gathering/manuscriptsubmitted',
             needAuth: true,
             component: ManuscriptSubmitted
+        },
+        {
+            path: '/editorialCenter/issue/allManuscript',
+            needAuth: true,
+            component: AllManuscript
+        },
+        {
+            path: '/editorialCenter/issue/tobeIssuedManuscript',
+            needAuth: true,
+            component: TobeIssuedManuscript
         }
-    ]
+    ],
+    sliderData: []
 };
 
 export default function(state=initialState, action){
-    const {type, payload} = action;
+    const {type, payload, appReduce} = action;
     switch(type){
         case types.SET_PARAMS_ROUTER:
-            debugger;
+            // 添加路由
             let _tempData = state.routeData;
             let _index = state.routeData.findIndex(item=>item.path === payload.path);            
             if(_index === -1){ // 添加
                 let _component = state.routeData.find(item=>item.path === payload.pathTemp);
+                console.log("line77-------------", _component);
                 let _obj = {
                     path: payload.path,
                     needAuth: true,
@@ -69,9 +82,13 @@ export default function(state=initialState, action){
                 }
                 _tempData = _tempData.concat(_obj);
             }
+            // 二级顶部菜单 curSliderKey 二级 thirdSliderKey 三级
+            let tempSlider = dynamicsUrl(payload.path.substring(1), "", "", appReduce.mainMenu);
+            console.log("tempSlider-------------------------:",tempSlider);
             return {
                 ...state,
-                routeData: _tempData
+                routeData: _tempData,
+                sliderData: tempSlider
             }
             break;
         default:

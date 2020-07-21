@@ -1,0 +1,45 @@
+@color: #1890ff;
+
+.sliderBox{
+    display: inline-block;
+    vertical-align: top;
+    // margin-top: 20px;
+    .sliderSingle{
+      width: 160px;
+      height: 60px;
+      background: #DCDCDC;
+      color: #fff;
+      text-align: center;
+      line-height: 60px;
+      font-size: 20px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+      display: block;
+      .square{
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 10px solid @color;
+        position: absolute;
+        right: -10px;
+        top: 19px;
+        z-index: 1;
+      }
+    }
+    .sliderCurr{
+      background: @color;
+    }
+  }
+  .contentBox{
+    position: relative;
+    //max-width: 1200px;
+    min-height: 800px;
+    margin: 0 auto;
+    display: flex;
+    width:95%;
+    margin-top:24px;
+  }
+  

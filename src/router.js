@@ -94,7 +94,7 @@
 import { hot } from 'react-hot-loader/root';
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {Route, Switch, Redirect, Link } from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
 import * as types from 'Redux/action-types';
 import {routeListen} from 'Util/commonFun';
@@ -114,6 +114,7 @@ class RouteApp  extends React.Component {
         console.log("路由页面是否刷新：", routeData)
         return (
             <>
+            <BrowserRouter>
             <Switch>
                 {
                     routeData.map(({path, needAuth, component}, index)=>{
@@ -127,6 +128,8 @@ class RouteApp  extends React.Component {
                 }
                {/* <Redirect to="/"></Redirect> */}
             </Switch>
+            </BrowserRouter>
+            
             </> 
         )
     }
@@ -151,7 +154,7 @@ const App = ({history, store}) =>{
         console.log("路由监听~~~~~~~~~~~~");
         let _store = store.getState();
         let _obj = routeListen(_store.appReduce, _store.routerReducer);
-        _obj && store.dispatch({type: types.SET_PARAMS_ROUTER, payload: _obj});
+        _obj && store.dispatch({type: types.SET_PARAMS_ROUTER, payload: _obj, appReduce: _store.appReduce});
     })
     return (
         <ConnectedRouter history={history} >

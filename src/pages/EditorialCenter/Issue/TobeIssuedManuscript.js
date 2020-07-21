@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import EditorialCenterMenu from '../components/EditorialCenterMenu';
 
-
-export default class ManuscriptFeedboxPublic extends Component {
+export default class TobeIssuedManuscript extends Component {
     render() {
         return (
             <div>
-               <EditorialCenterMenu />
-                ManuscriptFeedboxPublic
+                <EditorialCenterMenu />
+                TobeIssuedManuscript
             </div>
         )
     }

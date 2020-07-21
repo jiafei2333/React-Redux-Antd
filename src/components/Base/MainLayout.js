@@ -46,17 +46,18 @@ import {Link} from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import map from 'lodash/map';
 import {E} from 'Config/E';
+import SliderEditorial from 'Pages/EditorialCenter/components/SliderEditorial';
 import './style.less';
 
-const { Header, Content, Footer } = Layout;
-
+const { Header, Content, Footer, Sider } = Layout;
+const { SubMenu } = Menu;
 export class MainLayout extends Component {
     constructor(props){
         super(props);
         // this.isLoginIn = window.localStorage.getItem(`${E.SERVER_TOKEN}token`);
     }
     render() {
-        const {mainMenu, children, siteConfig, history} = this.props;
+        const {mainMenu, children, siteConfig, history, sliderData} = this.props;
         console.log("MainLayout------------------------------",this.props);
         console.log("MainLayout: ",history.location.pathname === '/login', history.location);
         return (
@@ -65,7 +66,7 @@ export class MainLayout extends Component {
                 history.location.pathname === '/login' ? 
                     <>{children}</> 
                     :
-                    <Layout className="layout">
+                    <Layout  className="layout">
                         <div className={'topBox'}>
                             <div className={'topAbsolute'} style={{ float:'left', marginLeft: '40px', }}>
                                 <Link to="/" >
@@ -85,13 +86,22 @@ export class MainLayout extends Component {
                                 </Menu>
                             </Header> 
                         </div>
-                        <Content style={{ padding: '0 50px' }}>
-                            {children}
-                        </Content>
-                        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                        <Layout>
+                            <Layout style={{ padding: '0 24px 24px' }}>
+                                <content className={'contentBox'}>
+                                    <SliderEditorial menuData={sliderData}  />
+                                    <Content style={{ padding: '0 50px' }}>
+                                        {children}
+                                    </Content>
+                                </content>
+                                
+                                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                            </Layout>
+                        </Layout>
                     </Layout>
                     
                 }
+                
             </>
         )
     }
@@ -99,7 +109,8 @@ export class MainLayout extends Component {
 
 const mapStateToProps = (state) => ({
     mainMenu: state.appReduce.mainMenu,
-    siteConfig: state.appReduce.siteConfig
+    siteConfig: state.appReduce.siteConfig,
+    sliderData: state.routerReducer.sliderData
 })
 
 const mapDispatchToProps = {

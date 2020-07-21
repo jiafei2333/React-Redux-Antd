@@ -43,16 +43,25 @@
 ` npm install --save react-router-dom `
 `npm install redux-thunk redux-logger --save`
 
+## 1.5 配置node环境
 
-## 1.5 基础目录创建
+新建 nodejs/server.js 
+`nodejs server.js`启动服务
+
+可以安装nodemon node的监视器 监视文件变化:
+`npm install nodemon -g 使用： nodemon 文件名（可以增加配置文件）`
+`yarn add express`
+`yarn add cors`
+
+## 1.6 基础目录创建
 
 ![](https://jiafei2333.github.io/html/react-redux01.png "")
 
-## 1.6 UI组件库
+## 1.7 UI组件库
 
 ` npm install antd --save `
 
-## 1.7 错误处理
+## 1.8 错误处理
 
 # 2. 基础功能
 
@@ -618,7 +627,7 @@ src/pages/EditorialCenter
 - 2.按钮的loading
 - 3.nprogress未完
 - 4.<s>saga代替thunk</s>（完成）
-- 5.配置node后台服务
+- 5.<s>配置node后台服务</s>（完成）
 - 6.antd中局部修改默认样式
 - 7.<s>react-hot-loader</s>（完成）
 - 8.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）
@@ -626,3 +635,4 @@ src/pages/EditorialCenter
 - 10.hooks封装模块
 - 11.动态加载组件（react-loadable）
 - 12.打包配置-打包优化-查看bundle大小 
+- 13.主题色配置

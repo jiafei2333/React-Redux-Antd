@@ -45,7 +45,7 @@ function checkStatus(response){
     error.code = response.status;
     error.response = response;
     error.obj = response.json();
-    window.location.href='/login';
+    // window.location.href='/login';
     throw error;
 }
 function parseJSON(response, opt) {
