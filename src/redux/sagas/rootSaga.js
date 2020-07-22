@@ -4,6 +4,8 @@ import * as types from '../action-types';
 import * as homeServer from '../actionServer/home';
 import {setToken, routeListen} from 'Util/commonFun';
 import {SET_PARAMS, SET_PARAMS_ROUTER } from '../action-types';
+import {watchGetEditorialCenterList, watchGetEditorialCenterListReview} from './editorialCenterSaga';
+
 
 // 登录
 function * watchPostLoginIn(){
@@ -70,11 +72,13 @@ function * watchBaseFetch(){
     }
 }
 export default function* rootSaga() {
-    console.log("Saga中页面刷新----------------")
+    console.log("Saga中页面刷新--------------- // 这里可以判断是否登录吗")
     //yield fork(watchGetAccountRights); // watchGetAccountRights 里没有用take来监听某个类型，所以页面完全熟悉你的时候可以自动调用 从而获取菜单栏
     yield fork(watchBaseFetch);
     // 下面这些里面都加了take 等待action被调用 
     yield fork(watchPostLoginIn);
     yield fork(watchGetSiteConfig);
     yield fork(watchGetThemeConfig);
+    yield fork(watchGetEditorialCenterList);
+    yield fork(watchGetEditorialCenterListReview);
 }

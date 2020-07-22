@@ -90,12 +90,18 @@ export class MainLayout extends Component {
                             <Layout style={{ padding: '0 24px 24px' }}>
                                 <content className={'contentBox'}>
                                     <SliderEditorial menuData={sliderData}  />
-                                    <Content style={{ padding: '0 50px' }}>
+                                    <Content style={{ paddingLeft: 20 }}>
                                         {children}
                                     </Content>
                                 </content>
                                 
-                                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                                <Footer style={{
+                                    textAlign: 'center',
+                                    }}>
+                                    <p style={{marginBottom: '0'}}> {siteConfig.CopyrightName} </p>
+                                    <p style={{marginBottom: '0'}}> 杭州XXXX技术有限公司 提供技术支持 </p>
+                                    <p> {siteConfig.ICPName} </p>
+                                </Footer>
                             </Layout>
                         </Layout>
                     </Layout>

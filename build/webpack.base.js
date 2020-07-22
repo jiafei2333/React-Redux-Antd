@@ -69,7 +69,8 @@ module.exports = (env) =>{
                 Util: path.resolve(__dirname, '../src/util/'),
                 Redux: path.resolve(__dirname, '../src/redux/'),
                 Components: path.resolve(__dirname, '../src/components/'),
-                Pages: path.resolve(__dirname, '../src/pages/')
+                Pages: path.resolve(__dirname, '../src/pages/'),
+                Assets: path.resolve(__dirname, '../src/assets/')
             },
             extensions: [".js", ".jsx", ".json", ".css", ".less",]
         },

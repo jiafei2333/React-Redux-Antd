@@ -105,3 +105,15 @@ export function inArr(str, arr) {
   }
   return false;
 }
+
+export const getArrary = (arr, params) => {
+  let temp = [];
+  arr.forEach( item => {
+    item.ChildList.forEach( v => {
+      if(v.ModeUrl === params){
+        temp = item.ChildList;
+      }
+    })
+  })
+  return temp;
+}

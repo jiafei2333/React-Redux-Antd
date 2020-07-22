@@ -449,6 +449,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(MainLayout)
 当mainMenu数据变化的时候页面菜单自动刷新显示。
 
 
+## 3.4 路由问题
+
+### 3.4.1 路由保护
+
+PrivateRoute.js 文件 这样写组件加载失败，之前好几周都是好好的，不知道为什么突然不行了？？
+
+## 3.4.2 刷新问题
+
+三级路由`localhost:3000/editorialCenter/auditing/auditPending`刷新界面又 `http://localhost:3000/editorialCenter/auditing/bundle.js 404 (Not Found)` ，之前怎么修复的忘记了.... 
+
 # 4. 报错
 
 ## 4.1 ant 引入.less后缀的样式文件
