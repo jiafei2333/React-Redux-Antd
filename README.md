@@ -617,6 +617,116 @@ src/pages/EditorialCenter
 
 自定义`useRequest hook` 封装统一列表逻辑，包括获取列表数据，分页；其中每个页面组件顶部的搜索条件不唯一，所以这里只将 请求列表数据的接口 + PageIndex + PageSize，进行了封装，各个页面的参数以Object.assign 拼接的方式传入。
 
+### 6.1.1 自定义hook
+
+1. 列表数据请求 + 分页
+
+src/pages/editorialCenter/auditing/auditPending.js
+```javascript
+import React, {useMemo} from 'react';
+import { Table } from 'antd';
+import get from 'lodash/get';
+import {getEditorialCenterListJson} from 'Redux/actionServer/content'; // 数据请求接口
+import useRequest from '../hooks/useRequest'; // 自定义hook
+
+function getColumns(){
+    const  columns = [
+        ... 这里是table的column
+    ];
+  return columns;
+}
+
+const AuditPending = () =>{
+    // 本页面组件的参数项(不唯一，所以不封装)
+    const params = useMemo(()=>({
+      Keyword: "",
+      SSubmitTime: "",
+      ESubmitTime: "",
+      FlowType: 0,
+      ReviewStatus: 99,
+      Sort: 0,
+    }));
+    const {data, loading, PageIndex, PageSize, setPagination} = useRequest(()=>{
+        let new_params = Object.assign({}, params, {PageIndex: PageIndex, PageSize: PageSize}); // 拼接列表参数
+        return getEditorialCenterListJson(new_params)
+    }, []);
+
+
+  return (
+    <>
+        <Table 
+            loading={loading}
+            columns={getColumns()} 
+            rowKey={'ArticleID'}
+            dataSource={get(data,"Items") ?get(data,"Items") : []} 
+            style={{backgroundColor:'#fff',borderRadius:'5px'}}
+            pagination={{
+                total:get(data,"Count") ? get(data,"Count") : 0,
+                showTotal:(total) => `共 ${total} 条记录 第${PageIndex}页`,
+                pageSize:PageSize,
+                current:PageIndex,
+                defaultCurrent:1,
+                showSizeChanger :true,
+                showQuickJumper:true,
+            }}
+            onChange={setPagination}
+        />
+    </>
+    
+);
+}
+export default AuditPending;
+```
+
+/redux/hooks/useRequest.js
+```javascript
+import {useState, useEffect} from 'react';
+
+const useRequest = (fn, dependence) =>{
+    const [data, setData] = useState({Items:[], Count: 0});
+    const [loading, setLoading] = useState(false);
+    const [PageIndex, setPageIndex] = useState(1);
+    const [PageSize, setPageSize] = useState(10);
+
+    // 依赖项 = 各个组件自定义的筛选条件参数 + PageIndex + PageSize
+    dependence = [...dependence, PageIndex, PageSize];
+
+    const request = () =>{
+        setLoading(true); // 设置loading
+        fn()
+        .then(res=>{
+            setData(res.Data);
+        })
+        .finally(()=>{
+            setLoading(false);
+        })
+    }
+
+    // 分页
+    const setPagination = (pagination) =>{
+        setPageIndex(pagination.current);
+        setPageSize(pagination.pageSize);
+    };
+    
+    useEffect(() => {
+        request()
+
+        return () => { // 销毁
+            // request()
+        }
+    }, dependence)
+
+    return {
+        data,
+        loading,
+        PageIndex,
+        PageSize,
+        setPagination
+    }
+}
+export default useRequest;
+```
+
 
 
 
