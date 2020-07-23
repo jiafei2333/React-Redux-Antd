@@ -75,12 +75,15 @@ export default function(state=initialState, action){
             if(_index === -1){ // 添加
                 let _component = state.routeData.find(item=>item.path === payload.pathTemp);
                 console.log("line77-------------", _component);
-                let _obj = {
-                    path: payload.path,
-                    needAuth: true,
-                    component: _component.component
+                if(_component){
+                    let _obj = {
+                        path: payload.path,
+                        needAuth: true,
+                        component: _component.component
+                    }
+                    _tempData = _tempData.concat(_obj);
                 }
-                _tempData = _tempData.concat(_obj);
+                
             }
             // 二级顶部菜单 curSliderKey 二级 thirdSliderKey 三级
             let tempSlider = dynamicsUrl(payload.path.substring(1), "", "", appReduce.mainMenu);

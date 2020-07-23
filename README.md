@@ -615,6 +615,8 @@ takeLatest('login',loginFunc)
 
 src/pages/EditorialCenter
 
+自定义`useRequest hook` 封装统一列表逻辑，包括获取列表数据，分页；其中每个页面组件顶部的搜索条件不唯一，所以这里只将 请求列表数据的接口 + PageIndex + PageSize，进行了封装，各个页面的参数以Object.assign 拼接的方式传入。
+
 
 
 
@@ -629,11 +631,12 @@ src/pages/EditorialCenter
 1. https://juejin.im/post/5b4de4496fb9a04fc226a7af
 2. https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
 3. https://juejin.im/post/5b440f7ae51d45195759f345
+4. https://juejin.im/post/5d6771375188257573636cf9
 
 
 # 8. 未完成功能
 
-- 1.全局loading
+- 1.<s>全局列表页loading</s>（完成，封装的自定义hook）
 - 2.按钮的loading
 - 3.nprogress未完
 - 4.<s>saga代替thunk</s>（完成）
@@ -642,7 +645,7 @@ src/pages/EditorialCenter
 - 7.<s>react-hot-loader</s>（完成）
 - 8.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）
 - 9.<s>路由监听，拼接路由</s>（完成）
-- 10.hooks封装模块
+- 10.<s>自定义hooks封装</s>（完成）
 - 11.动态加载组件（react-loadable）
 - 12.打包配置-打包优化-查看bundle大小 
 - 13.主题色配置
