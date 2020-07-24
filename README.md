@@ -691,7 +691,7 @@ const useRequest = (fn, dependence) =>{
     // 依赖项 = 各个组件自定义的筛选条件参数 + PageIndex + PageSize
     dependence = [...dependence, PageIndex, PageSize];
 
-    const request = () =>{
+    const request = useCallback(() =>{
         setLoading(true); // 设置loading
         fn()
         .then(res=>{
@@ -700,7 +700,7 @@ const useRequest = (fn, dependence) =>{
         .finally(()=>{
             setLoading(false);
         })
-    }
+    }, dependence);
 
     // 分页
     const setPagination = (pagination) =>{
@@ -714,7 +714,7 @@ const useRequest = (fn, dependence) =>{
         return () => { // 销毁
             // request()
         }
-    }, dependence)
+    }, dependence);
 
     return {
         data,
@@ -727,7 +727,220 @@ const useRequest = (fn, dependence) =>{
 export default useRequest;
 ```
 
+2. 列表参数条件查询，添加了日期控件、搜索框
 
+src/pages/editorialCenter/auditing/auditPending.js
+```javascript
+function getColumns(){
+    const  columns = [
+        ... 这里是table的column
+    ];
+  return columns;
+}
+const AuditPending = () =>{
+    const [timeV, setTime] = useState("");
+    const [Keyword, setKeyword] = useState("");
+    // 本页面组件的参数项(不唯一，所以不封装)
+    const [params, setParams] = useState({
+        Keyword: "",
+        SSubmitTime: "",
+        ESubmitTime: "",
+        FlowType: 0,
+        ReviewStatus: 99,
+        Sort: 0,
+    });
+
+    // 时间控件
+    const setRangePicker = useCallback((value) => {
+        setTime(value);
+    }, [timeV]);
+    // 关键词搜索
+    const searchInput = useCallback((e) => {
+        setKeyword(e.target.value);
+    }, [Keyword])
+    // 清空操作
+    const clearState = () => {
+        setTime("");
+        setKeyword("");
+        setParams(Object.assign({}, params, {Keyword: "", SSubmitTime: "", ESubmitTime: ""}));
+    };
+    // 筛选操作
+    const searchFun = () => {
+        setParams(Object.assign({}, params, {Keyword: Keyword, SSubmitTime: timeV ? moment(timeV[0]).format('YYYY-MM-DD') : "", ESubmitTime: timeV ? moment(timeV[1]).format('YYYY-MM-DD') : ""}));
+    };
+
+    // 自定义hook
+    const {data, loading, PageIndex, PageSize, setPagination} = useRequest(()=>{
+        let new_params = Object.assign({}, params, {PageIndex: PageIndex, PageSize: PageSize}); // 拼接列表参数
+        return getEditorialCenterListJson(new_params);
+    }, [params]);
+
+  return (
+    <>
+        <div className={'searchBox'}>
+            <span>提交时间：</span>
+            <RangePicker onChange={setRangePicker}  value={timeV} className={'marR20'}/>
+            <span>关键词：</span>
+            <Input placeholder="请输入关键词" value={Keyword}  onChange={searchInput} style={{width: 160}} className={'marR20'}/>
+            <Button onClick={searchFun}type="primary" className={'marR20'} >筛选</Button>
+            <Button onClick={clearState}>清空</Button>
+        </div>
+        <Table 
+            loading={loading}
+            columns={getColumns()} 
+            rowKey={'ArticleID'}
+            dataSource={get(data,"Items") ?get(data,"Items") : []} 
+            style={{backgroundColor:'9#fff',borderRadius:'5px'}}
+            pagination={{
+                total:get(data,"Count") ? get(data,"Count") : 0,
+                showTotal:(total) => `共 ${total} 条记录 第${PageIndex}页`,
+                pageSize:PageSize,
+                current:PageIndex,
+                defaultCurrent:1,
+                showSizeChanger :true,
+                showQuickJumper:true,
+            }}
+            onChange={setPagination}
+        />
+    </>
+);
+}
+export default AuditPending;
+```
+![](https://jiafei2333.github.io/html/images/useRequest-hook.gif "")
+
+3. 这里的state太多，使用 useReducer 改进
+
+```javascript
+import React, {useState, useEffect, useCallback, useReducer} from 'react';
+import { useSelector } from 'react-redux';
+import { Checkbox, DatePicker, Button, Input, Select  } from 'antd';
+import { PictureOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import moment from 'moment';
+import EditorialCenterMenu from '../components/EditorialCenterMenu';
+import TableFunction from '../components/TableFunction';
+import {getEditorialCenterListJson, getArticleGetReviewStatusJson} from 'Redux/actionServer/content';
+import useRequest from '../hooks/useRequest';
+import {pageButton} from 'Util/commonFun';
+
+const { RangePicker } = DatePicker;
+const { Option } = Select;
+
+let initialReviewStatus = {"Text": "全部", "Value": "99"};
+let initialState = {
+    timeV: "",
+    Keyword: "",
+    ReviewStatusData: [],
+    ReviewStatus: initialReviewStatus
+}
+
+function reducer(state, action){
+    switch (action.type) {
+        case 'SetParams':
+          return {
+              ...state,
+              [`${action.paramsN}`]: action.paramsV
+          };
+        default:
+          return state;
+    }
+}
+
+function getColumns(){
+    const  columns = [
+        ... 这里是table的column
+    ];
+  return columns;
+}
+
+const AuditPending = () =>{
+    const [{timeV, Keyword, ReviewStatusData, ReviewStatus }, dispatch] = useReducer(reducer, initialState);
+
+    // 本页面组件的参数项(不唯一，所以不封装)
+    const [params, setParams] = useState({
+        Keyword: "",
+        SSubmitTime: "",
+        ESubmitTime: "",
+        FlowType: 0,
+        ReviewStatus: ReviewStatus.Value,
+        Sort: 0,
+    });
+    // 自定义hook
+    const {data, loading, PageIndex, PageSize, setPagination} = useRequest(()=>{
+        let new_params = Object.assign({}, params, {PageIndex: PageIndex, PageSize: PageSize}); // 拼接列表参数
+        return getEditorialCenterListJson(new_params);
+    }, [params]);
+    // 顶部tab切换数据
+    const mainMenu = useSelector(state => state.appReduce.mainMenu);
+
+    /* --------------- 筛选操作     ---------------------------------------------------------------------------*/
+    // 时间控件
+    const setRangePicker = useCallback((value) => {
+        dispatch({type: 'SetParams', paramsN: 'timeV', paramsV: value});
+    }, [timeV]);
+    // 关键词搜索
+    const searchInput = useCallback((e) => {
+        dispatch({type: 'SetParams', paramsN: 'Keyword', paramsV: e.target.value});
+    }, [Keyword])
+    // 状态
+    // 获取审核状态数据
+    useEffect(()=>{
+        getArticleGetReviewStatusJson()
+        .then(res=>{
+            dispatch({type: 'SetParams', paramsN: 'ReviewStatusData', paramsV: res.Data});
+        })
+    }, []);
+    // 状态change
+    const selectChange = useCallback((value) => {
+        let _temp = ReviewStatusData.find( item=>{
+            return item.Value === value
+        });
+        dispatch({type: 'SetParams', paramsN: 'ReviewStatus', paramsV: {"Text": _temp.Text, "Value": _temp.Value}});
+    }, [ReviewStatusData]);
+    // 清空操作
+    const clearState = useCallback(() => {
+        dispatch({type: 'SetParams', paramsN: 'timeV', paramsV: ''});
+        dispatch({type: 'SetParams', paramsN: 'Keyword', paramsV: ''});
+        setParams(Object.assign({}, params, {Keyword: "", SSubmitTime: "", ESubmitTime: "", ReviewStatus: initialReviewStatus.Value}));
+        dispatch({type: 'SetParams', paramsN: 'ReviewStatus', paramsV: initialReviewStatus});
+    }, []);
+    // 筛选操作
+    const searchFun = () => {
+        if(PageIndex !== 1) setPagination({current: 1, pageSize: PageSize}); // 添加搜索条件，PageIndex 初始化
+        setParams(Object.assign({}, params, {Keyword: Keyword, SSubmitTime: timeV ? moment(timeV[0]).format('YYYY-MM-DD') : "", ESubmitTime: timeV ? moment(timeV[1]).format('YYYY-MM-DD') : "", ReviewStatus: ReviewStatus.Value,}));
+    };
+
+  return (
+    <>
+        <EditorialCenterMenu mainMenu={mainMenu} />
+        {/* 筛选条件 */}
+        <div className={'searchBox'}>
+            <span>提交时间：</span>
+            <RangePicker onChange={setRangePicker}  value={timeV} className={'marR20'}/>
+            <span >审核状态：</span>
+            <Select value={ReviewStatus.Text} onChange={selectChange} style={{ width: 120 }}  className={'marR20'}>
+            {
+            ReviewStatusData &&
+            ReviewStatusData.map( (item, index)=>{
+                return (
+                <Option value={item.Value} key={index}>{item.Text}</Option>
+                )
+            })
+            }
+            </Select>
+            <span>关键词：</span>
+            <Input placeholder="请输入关键词" value={Keyword}  onChange={searchInput} style={{width: 160}} className={'marR20'}/>
+            <Button onClick={searchFun}type="primary" className={'marR20'} >筛选</Button>
+            <Button onClick={clearState}>清空</Button>
+        </div>
+        {/* 列表通用 table 组件 */}
+        <TableFunction loading={loading} getColumns={getColumns()} data={data} PageIndex={PageIndex} PageSize={PageSize} setPagination={setPagination}/>
+    </>  
+ );
+}
+
+export default AuditPending;
+```
 
 
 

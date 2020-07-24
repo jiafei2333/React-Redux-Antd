@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 
 const useRequest = (fn, dependence) =>{
     const [data, setData] = useState({Items:[], Count: 0});
@@ -9,7 +9,7 @@ const useRequest = (fn, dependence) =>{
     // 依赖项 = 各个组件自定义的筛选条件参数 + PageIndex + PageSize
     dependence = [...dependence, PageIndex, PageSize];
 
-    const request = () =>{
+    const request = useCallback(() =>{
         setLoading(true); // 设置loading
         fn()
         .then(res=>{
@@ -18,10 +18,11 @@ const useRequest = (fn, dependence) =>{
         .finally(()=>{
             setLoading(false);
         })
-    }
+    }, dependence);
 
     // 分页
     const setPagination = (pagination) =>{
+        console.log("pagination:-------",pagination)
         setPageIndex(pagination.current);
         setPageSize(pagination.pageSize);
     };

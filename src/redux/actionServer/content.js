@@ -10,3 +10,8 @@ export async function getEditorialCenterListReviewJson(params) {
     let result = await requestGet(`${E.SERVER_HOME}Article/GetReviewArticles`, params)
     return result
 }
+// 获取审核状态
+export async function getArticleGetReviewStatusJson(params) {
+    let result = await requestGet(`${E.SERVER_HOME}Article/GetReviewStatus`, params)
+    return result
+}

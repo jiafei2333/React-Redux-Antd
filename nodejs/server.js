@@ -3600,5 +3600,48 @@ app.get('/api/Article/GetMyReview', function (req, res) {
   };
   res.send(JSON.stringify(data));
 })
+// 审核状态
+app.get('/api/Article/GetReviewStatus', function (req, res) {
+  let data = {
+    "Code": 0,
+    "Message": "数据获取成功！",
+    "Data": [
+      {
+        "Disabled": false,
+        "Group": null,
+        "Selected": true,
+        "Text": "全部",
+        "Value": "99"
+      },
+      {
+        "Disabled": false,
+        "Group": null,
+        "Selected": false,
+        "Text": "待审",
+        "Value": "1"
+      },
+      {
+        "Disabled": false,
+        "Group": null,
+        "Selected": false,
+        "Text": "审核被拒",
+        "Value": "2"
+      }
+    ]
+  };
+  res.send(JSON.stringify(data));
+})
+// 本级审核
+app.get('/api/Article/GetReviewArticles', function (req, res) {
+  let data = {
+    "Code": 0,
+    "Message": "数据获取成功！",
+    "Data": {
+      "Items": [],
+      "Count": 0
+    }
+  };
+  res.send(JSON.stringify(data));
+})
 
 app.listen(3001)

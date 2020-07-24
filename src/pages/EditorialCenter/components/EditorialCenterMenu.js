@@ -16,7 +16,7 @@ const EditorialCenterMenu = ({mainMenu}) =>{
         new_current = get(newUrl,"thirdMenu") ? get(newUrl,"thirdMenu") : current;
     }
     
-    console.log("EditorialCenterMenu render------2:", newUrl, current, new_current);
+    // console.log("EditorialCenterMenu render------2:", newUrl, current, new_current);
     // handleClick = e => {
     //     console.log('click ', e);
     //     this.setState({
