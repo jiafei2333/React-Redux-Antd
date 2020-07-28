@@ -946,7 +946,7 @@ const AuditPending = () =>{
             <Button onClick={searchFun}type="primary" className={'marR20'} >筛选</Button>
             <Button onClick={clearState}>清空</Button>
         </div>
-        {/* 列表通用 table 组件 --- 这里把这个table单独封装了 --*/}
+        {/* 列表通用 table 组件 */}
         <TableFunction loading={loading} getColumns={getColumns()} data={data} PageIndex={PageIndex} PageSize={PageSize} setPagination={setPagination}/>
     </>  
  );
@@ -955,6 +955,7 @@ const AuditPending = () =>{
 export default AuditPending;
 ```
 
+将列表页面中的table单独封装如下：
 /src/pages/EditorialCenter/components/TableFunction.js
 ```javascript
 import React from 'react';
