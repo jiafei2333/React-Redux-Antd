@@ -632,7 +632,7 @@ src/pages/EditorialCenter
 
 ### 6.1.1 自定义hook
 
-1. 列表数据请求 + 分页
+#### 1. 列表数据请求 + 分页
 
 src/pages/editorialCenter/auditing/auditPending.js
 ```javascript
@@ -740,7 +740,7 @@ const useRequest = (fn, dependence) =>{
 export default useRequest;
 ```
 
-2. 列表参数条件查询，添加了日期控件、搜索框
+#### 2. 列表参数条件查询，添加了日期控件、搜索框
 
 src/pages/editorialCenter/auditing/auditPending.js
 ```javascript
@@ -820,9 +820,9 @@ const AuditPending = () =>{
 }
 export default AuditPending;
 ```
-![](https://jiafei2333.github.io/html/images/useRequest-hook.gif "")
+![image](https://jiafei2333.github.io/html/images/useRequest-hook.gif)
 
-3. 这里的state太多，使用 useReducer 改进
+#### 3. 这里的state太多，使用 useReducer 改进
 
 ```javascript
 import React, {useState, useEffect, useCallback, useReducer} from 'react';
