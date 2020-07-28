@@ -977,7 +977,7 @@ export default AuditPending;
 
 - 1.<s>全局列表页loading</s>（完成，封装的自定义hook）
 - 2.按钮的loading
-- 3.nprogress未完
+- 3.nprogress
 - 4.<s>saga代替thunk</s>（完成）
 - 5.<s>配置node后台服务</s>（完成）
 - 6.antd中局部修改默认样式
@@ -988,3 +988,6 @@ export default AuditPending;
 - 11.<s>动态加载组件（react-loadable）</s>（完成）
 - 12.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）
 - 13.主题色配置
+- 14.打包之后样式引入问题
+
+github项目入口: https://github.com/jiafei2333/React-Redux-Antd
