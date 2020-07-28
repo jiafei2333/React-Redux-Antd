@@ -1,65 +1,104 @@
 import * as types from 'Redux/action-types';
-import Home from 'Pages/Home/Home';
-import LoginIndex from 'Pages/Home/LoginIndex';
-import {AuditLevel, AuditPending, TobeEditedManuscript, AnnulsManuscript, InstitutionalRepository, ManuscriptFeedboxPublic, ManuscriptSubmitted,AllManuscript,TobeIssuedManuscript} from 'Pages/EditorialCenter/index';
+import Loadable from 'react-loadable';
+import Loading from 'Components/Base/Loading';
 import {dynamicsUrl} from 'Util/commonFun';
+
+const loadingFun = (path) =>{
+    return Loadable({
+        loader: () => import('Pages/Home/Home'),
+        loading: Loading,
+    })
+}
 
 const initialState = {
     routeData: [
         {
             path: '/',
             needAuth: true, // true 需要判断是否登录
-            component: Home,
+            component:  Loadable({
+                loader: () => import('Pages/Home/Home'),
+                loading: Loading,
+            })
         },
         {
             path: '/login',
             needAuth: false,
-            component: LoginIndex,
+            component: Loadable({
+                loader: () => import('Pages/Home/LoginIndex'),
+                loading: Loading,
+            })
         },
         {
             path: '/editorialCenter/auditing/auditLevel',
             needAuth: true,
-            component: AuditLevel
+            component: Loadable({
+                loader: () => import('Pages/EditorialCenter/Auditing/AuditLevel'),
+                loading: Loading,
+            })
         },
         {
             path: '/editorialCenter/auditing/auditPending',
             needAuth: true,
-            component: AuditPending
+            component: Loadable({
+                loader: () => import('Pages/EditorialCenter/Auditing/AuditPending'),
+                loading: Loading,
+            })
         },
         {
             path: '/editorialCenter/edit/tobeEditedManuscript',
             needAuth: true,
-            component: TobeEditedManuscript
+            component: Loadable({
+                loader: () => import('Pages/EditorialCenter/Edit/TobeEditedManuscript'),
+                loading: Loading,
+            })
         },
         {
             path: '/editorialCenter/gathering/annulsManuscript',
             needAuth: true,
-            component: AnnulsManuscript
+            component: Loadable({
+                loader: () => import('Pages/EditorialCenter/Gathering/AnnulsManuscript'),
+                loading: Loading,
+            })
         },
         {
             path: '/editorialCenter/gathering/InstitutionalRepository',
             needAuth: true,
-            component: InstitutionalRepository
+            component: Loadable({
+                loader: () => import('Pages/EditorialCenter/Gathering/InstitutionalRepository'),
+                loading: Loading,
+            })
         },
         {
             path: '/editorialCenter/gathering/manuFeedboxPublic',
             needAuth: true,
-            component: ManuscriptFeedboxPublic
+            component: Loadable({
+                loader: () => import('Pages/EditorialCenter/Gathering/ManuscriptFeedboxPublic'),
+                loading: Loading,
+            })
         },
         {
             path: '/editorialCenter/gathering/manuscriptsubmitted',
             needAuth: true,
-            component: ManuscriptSubmitted
+            component: Loadable({
+                loader: () => import('Pages/EditorialCenter/Gathering/ManuscriptSubmitted'),
+                loading: Loading,
+            })
         },
         {
             path: '/editorialCenter/issue/allManuscript',
             needAuth: true,
-            component: AllManuscript
+            component: Loadable({
+                loader: () => import('Pages/EditorialCenter/issue/AllManuscript'),
+                loading: Loading,
+            })
         },
         {
             path: '/editorialCenter/issue/tobeIssuedManuscript',
             needAuth: true,
-            component: TobeIssuedManuscript
+            component: Loadable({
+                loader: () => import('Pages/EditorialCenter/issue/TobeIssuedManuscript'),
+                loading: Loading,
+            })
         }
     ],
     sliderData: []

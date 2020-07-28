@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { Checkbox, DatePicker, Button, Input, Select  } from 'antd';
 import { PictureOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import moment from 'moment';
-import EditorialCenterMenu from '../components/EditorialCenterMenu';
+import Loadable from 'react-loadable';
+import Loading from 'Components/Base/Loading';
 import TableFunction from '../components/TableFunction';
 import {getEditorialCenterListJson, getArticleGetReviewStatusJson} from 'Redux/actionServer/content';
 import useRequest from '../hooks/useRequest';
@@ -11,6 +12,10 @@ import {pageButton} from 'Util/commonFun';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
+const EditorialCenterMenu =  Loadable({
+    loader: () => import('../components/EditorialCenterMenu'),
+    loading: Loading,
+})
 
 let initialReviewStatus = {"Text": "全部", "Value": "99"};
 let initialState = {

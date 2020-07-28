@@ -32,6 +32,7 @@
 ` npm install core-js@2 --save `
 ` npm install --save-dev @babel/plugin-transform-runtime `
 ` npm install --save @babel/runtime `
+` npm install --save-dev @babel/plugin-syntax-dynamic-import `
 
 具体步骤见 https://jiafei2333.github.io/2019/11/13/Webpack-js/
 
@@ -42,6 +43,7 @@
 ` npm install --save redux-saga `
 ` npm install --save react-router-dom `
 `npm install redux-thunk redux-logger --save`
+`npm install mini-css-extract-plugin --save-dev` //  抽离css文件
 
 ## 1.5 配置node环境
 
@@ -55,7 +57,7 @@
 
 ## 1.6 基础目录创建
 
-![](https://jiafei2333.github.io/html/react-redux01.png "")
+![](https://jiafei2333.github.io/html/images/react-redux01.png "")
 
 ## 1.7 UI组件库
 
@@ -455,9 +457,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(MainLayout)
 
 PrivateRoute.js 文件 这样写组件加载失败，之前好几周都是好好的，不知道为什么突然不行了？？
 
-## 3.4.2 刷新问题
+### 3.4.2 刷新问题
 
 三级路由`localhost:3000/editorialCenter/auditing/auditPending`刷新界面又 `http://localhost:3000/editorialCenter/auditing/bundle.js 404 (Not Found)` ，之前怎么修复的忘记了.... 
+
+### 3.4.3 BrowserRouter 重定向问题
+
+和 HashRouter 不同的是，BrowserRouter路由跳转会根据 /xxx 后面的具体页面去服务器请求，在开发模式下可以配置如下：
+```javascript
+devServer:{
+    historyApiFallback: true,
+}
+```
+
+在生产环境下，我这里的后台是.net环境，远程桌面是用IIS配置的站点环境，只要在服务器端下载安装 https://www.iis.net/downloads/microsoft/url-rewrite，然后在打包好的跟目录下添加项目中的 `web.config`文件即可。
 
 # 4. 报错
 
@@ -949,6 +962,9 @@ export default AuditPending;
 
 
 
+
+
+
 # 7. 相关文章
 
 1. https://juejin.im/post/5b4de4496fb9a04fc226a7af
@@ -969,6 +985,6 @@ export default AuditPending;
 - 8.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）
 - 9.<s>路由监听，拼接路由</s>（完成）
 - 10.<s>自定义hooks封装</s>（完成）
-- 11.动态加载组件（react-loadable）
-- 12.打包配置-打包优化-查看bundle大小 
+- 11.<s>动态加载组件（react-loadable）</s>（完成）
+- 12.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）
 - 13.主题色配置

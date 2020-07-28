@@ -5,41 +5,51 @@ const prod = require('./webpack.prod');
 // html插件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// 抽离css样式
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = (env) =>{
     let isDev = env.development;
     const base = {
         devtool:isDev?'cheap-module-eval-source-map':false,
         entry:'./src/index.js',
         output:{
-            filename:'bundle.js',
+            filename:'[name].[hash].js',
             path:path.resolve(__dirname,'../dist')
         },
-        plugins:[
+        plugins:[ // 执行顺序 从上到下
+            new CleanWebpackPlugin(), // 每次打包之前都清空dist目录下的文件
             new HtmlWebpackPlugin({
                 filename:'index.html', // 打包出来的文件名
+                hash:true, 
                 template:path.resolve(__dirname,'../public/index.html'),// 以这个文件为模板
                 minify: !isDev && { // 压缩
-                    removeAttributeQuotes: true, // 双引号都去掉
-                    collapseWhitespace: true, // dist下产生的html 折叠 显示一行
+                    removeComments:true,//清除注释
+                    removeAttributeQuotes: true // 双引号都去掉
                 }
             }),
-            new CleanWebpackPlugin(), // 每次打包之前都清空dist目录下的文件
+            !isDev && new MiniCssExtractPlugin({ // 抽离css
+                filename: "[name].[hash:5].css",
+            })
         ],
         module:{
             rules:[
                 {
                     test:/\.css$/,
-                    use: ['style-loader',{
+                    use: [
+                        isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+                        {
                             loader: 'css-loader',
                             options:{ // 给loader传递参数
                                 // 如果css文件引入了其他文件@import
                                 importLoaders: 2 // 1表示使用后面的一个即 'less-loader'，2表示使用后面的2个...以此类推
-                            }
+                        }
                     }, 'postcss-loader','less-loader']
                 },
                 {
                     test: /\.less$/,
-                    use: ["style-loader", "css-loader", {
+                    use: [
+                        isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+                        "css-loader", {
                         loader: "less-loader",
                         options: {
                             javascriptEnabled: true
@@ -52,7 +62,11 @@ module.exports = (env) =>{
                 },
                 {
                     test: /\.(jpe?g|png|gif)$/,
-                    use: 'file-loader'
+                    loader: 'file-loader',
+                    options: {
+                        outputPath: 'assets', // 图片路径
+                        name: '[name].[ext]', // 名字
+                    },
                 },
                 {
                     // 图标的转化
