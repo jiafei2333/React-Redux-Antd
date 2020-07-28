@@ -634,7 +634,7 @@ src/pages/EditorialCenter
 
 #### 1. 列表数据请求 + 分页
 
-src/pages/editorialCenter/auditing/auditPending.js
+src/pages/EditorialCenter/Auditing/auditPending.js
 ```javascript
 import React, {useMemo} from 'react';
 import { Table } from 'antd';
@@ -742,7 +742,7 @@ export default useRequest;
 
 #### 2. 列表参数条件查询，添加了日期控件、搜索框
 
-src/pages/editorialCenter/auditing/auditPending.js
+src/pages/EditorialCenter/Auditing/auditPending.js
 ```javascript
 function getColumns(){
     const  columns = [
@@ -946,7 +946,7 @@ const AuditPending = () =>{
             <Button onClick={searchFun}type="primary" className={'marR20'} >筛选</Button>
             <Button onClick={clearState}>清空</Button>
         </div>
-        {/* 列表通用 table 组件 */}
+        {/* 列表通用 table 组件 --- 这里把这个table单独封装了 --*/}
         <TableFunction loading={loading} getColumns={getColumns()} data={data} PageIndex={PageIndex} PageSize={PageSize} setPagination={setPagination}/>
     </>  
  );
@@ -955,6 +955,45 @@ const AuditPending = () =>{
 export default AuditPending;
 ```
 
+/src/pages/EditorialCenter/components/TableFunction.js
+```javascript
+import React from 'react';
+import PropTypes from 'prop-types';
+import get from 'lodash/get';
+import { Table } from 'antd';
+
+const TableFunction = ({loading, getColumns, data, PageIndex, PageSize, setPagination}) =>{
+    return (
+        <Table 
+            loading={loading}
+            columns={getColumns} 
+            rowKey={'ArticleID'}
+            dataSource={get(data,"Items") ?get(data,"Items") : []} 
+            style={{backgroundColor:'#fff',borderRadius:'5px'}}
+            pagination={{
+                total:get(data,"Count") ? get(data,"Count") : 0,
+                showTotal:(total) => `共 ${total} 条记录 第${PageIndex}页`,
+                pageSize:PageSize,
+                current:PageIndex,
+                defaultCurrent:1,
+                showSizeChanger :true,
+                showQuickJumper:true,
+            }}
+            onChange={setPagination}
+        />
+    )
+}
+
+TableFunction.propTypes = {
+    loading: PropTypes.bool,
+    getColumns: PropTypes.array,
+    data: PropTypes.object,
+    PageIndex: PropTypes.number,
+    PageSize: PropTypes.number,
+    setPagination: PropTypes.func
+}
+export default TableFunction;
+```
 
 
 
