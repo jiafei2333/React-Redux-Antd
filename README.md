@@ -822,6 +822,7 @@ export default AuditPending;
 ```
 ![image](https://jiafei2333.github.io/html/images/useRequest-hook.gif)
 
+
 #### 3. 这里的state太多，使用 useReducer 改进
 
 ```javascript
@@ -956,6 +957,7 @@ export default AuditPending;
 ```
 
 将列表页面中的table单独封装如下：
+
 /src/pages/EditorialCenter/components/TableFunction.js
 ```javascript
 import React from 'react';
