@@ -95,7 +95,10 @@ const initialState = {
             })
         }
     ],
-    sliderData: []
+    sliderData: {
+        leftMenu: [],
+        thirdMenu: ""
+    }
 };
 
 export default function(state=initialState, action){
@@ -130,7 +133,16 @@ export default function(state=initialState, action){
                 ...state,
                 [`${payload['paramsName']}`]: payload.paramsValue
             }
-            break
+            break;
+        case types.SET_PARAMS_OBJECT:
+            return {
+                ...state,
+                [`${payload.paramsNameObj}`]: {
+                    ...state[`${payload.paramsNameObj}`],
+                    [`${payload.paramsName}`]: payload.paramsValue
+                }
+            }
+            break;
         default:
             return state;
     }

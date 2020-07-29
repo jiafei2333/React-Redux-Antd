@@ -11,6 +11,7 @@ import Page404 from 'Pages/404';
 import PrivateRoute from 'Components/Base/PrivateRoute';
 import MainLayout from 'Components/Base/MainLayout';
 
+
 class RouteApp  extends React.Component {
     constructor(props){
         super(props);
@@ -60,6 +61,17 @@ const App = ({history, store}) =>{
         let _store = store.getState();
         let _obj = routeListen(_store.appReduce.mainMenu, _store.routerReducer);
         _obj && store.dispatch({type: types.SET_PARAMS_ROUTER, payload: _obj, mainMenu: _store.appReduce.mainMenu});
+
+        // 更新 采编审发模块 左侧二级菜单
+        let urlSplit = history.location.pathname.split("/");
+        if(urlSplit[1] === 'editorialCenter' && urlSplit.length === 4 ){ 
+            let oldUrl = _store.routerReducer.sliderData.thirdMenu.split("/");
+            // console.log("Old:---",oldUrl,"New:---", urlSplit, "history:---", history);
+            if(oldUrl.length === 4 && `/${oldUrl[1]}/${oldUrl[2]}` !== `/${urlSplit[1]}/${urlSplit[2]}`){
+                store.dispatch({type: types.SET_PARAMS_OBJECT, payload: {paramsNameObj: 'sliderData', paramsName: 'thirdMenu', paramsValue: location.pathname}});
+            } 
+        }
+        
     })
     return (
         <ConnectedRouter history={history} >
