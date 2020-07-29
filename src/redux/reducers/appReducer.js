@@ -16,7 +16,8 @@ export default function(state=initialState, action){
                 [`${payload['paramsName']}`]: payload.paramsValue
             }
             break;
-        // case '@@router/LOCATION_CHANGE':
+        // case types.SET_MENU_DATA:
+            
         //     console.log("路由监听 change----------------------------------")
         //     // return {
         //     //     ...state

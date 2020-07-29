@@ -9,12 +9,14 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = (env) =>{
     let isDev = env.development;
+    console.log("----------isDev-------------", isDev);
     const base = {
         devtool:isDev?'cheap-module-eval-source-map':false,
         entry:'./src/index.js',
         output:{
             filename:'[name].[hash].js',
-            path:path.resolve(__dirname,'../dist')
+            path:path.resolve(__dirname,'../dist'),
+            publicPath: '/'
         },
         plugins:[ // 执行顺序 从上到下
             new CleanWebpackPlugin(), // 每次打包之前都清空dist目录下的文件
@@ -30,7 +32,7 @@ module.exports = (env) =>{
             !isDev && new MiniCssExtractPlugin({ // 抽离css
                 filename: "[name].[hash:5].css",
             })
-        ],
+        ].filter(Boolean),
         module:{
             rules:[
                 {

@@ -1,5 +1,5 @@
 import {E} from 'Config/E';
-import get from 'lodash/get';
+import _ from 'lodash';
 // 登录名
 export const loginNameReg = (rule, value, callback) => {
     if((/^[a-zA-Z][a-zA-Z0-9_]{3,20}$/.test(value)) || (/^1[34578]\d{9}$/.test(value))){
@@ -24,15 +24,15 @@ export const getToken = ()=>{
   return window.localStorage.getItem(`${E.SERVER_TOKEN}token`);
 }
 // 根据一级目录推导出当前一级目录下三级目录路径
-export const routeListen = (appReduce, routerReducer) =>{
+export const routeListen = (mainMenu, routerReducer) =>{
   let currUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
   let _split = currUrl.split("/");
   if(_split.length !== 2 || !_split[1] ) return  false;
-  let _index = appReduce.mainMenu.findIndex(item=>item.ModeUrl === currUrl);
+  let _index = mainMenu.findIndex(item=>item.ModeUrl === currUrl);
   let _index2 = routerReducer.routeData.findIndex(item=>item.path === currUrl);
   let tempUrl;
   if(_index > -1 && _index2 === -1){
-      tempUrl = get(appReduce.mainMenu[_index], "ChildList.0.ChildList.0.ModeUrl");
+      tempUrl = _.get(mainMenu[_index], "ChildList.0.ChildList.0.ModeUrl");
       let _obj = {
           path: '/editorialCenter',
           pathTemp: tempUrl
@@ -57,13 +57,13 @@ export const dynamicsUrl = (parentSliderKey, curSliderKey, thirdSliderKey, mainM
 
   let temp = [];
   // 1、当前网址为一级栏目且没有子栏目
-  if(!get(leftMenu,"ChildList.length")){ //
+  if(!_.get(leftMenu,"ChildList.length")){ //
     thirdMenu = leftMenu.ModeUrl;
     temp.push(leftMenu)
     return {leftMenu: temp, thirdMenu};
   }
   //即左侧二级菜单
-  leftMenu = get(leftMenu,"ChildList");
+  leftMenu = _.get(leftMenu,"ChildList");
   //console.log("leftMenu::", leftMenu, parentSliderKey, curSliderKey, thirdSliderKey);
   // 2、当前网址为二级栏目
   if(parentSliderKey && curSliderKey && !thirdSliderKey){
@@ -75,11 +75,11 @@ export const dynamicsUrl = (parentSliderKey, curSliderKey, thirdSliderKey, mainM
     thirdMenu = `/${parentSliderKey}/${curSliderKey}/${thirdSliderKey}`;
   }else{
     // 当前栏目为一级栏目 所以默认限制第0个为初始子栏目
-    thirdMenu = get(leftMenu,"0.ModeUrl");
+    thirdMenu = _.get(leftMenu,"0.ModeUrl");
   }
 
-  if(thirdMenu === "" && get(leftMenu,"0.ChildList.length") > 0){
-    thirdMenu = get(leftMenu,"0.ChildList.0.ModeUrl");
+  if(thirdMenu === "" && _.get(leftMenu,"0.ChildList.length") > 0){
+    thirdMenu = _.get(leftMenu,"0.ChildList.0.ModeUrl");
   }
   //console.log("thirdMenu::", thirdMenu)
   if(thirdMenu === "") return '/404';

@@ -459,7 +459,18 @@ PrivateRoute.js 文件 这样写组件加载失败，之前好几周都是好好
 
 ### 3.4.2 刷新问题
 
-三级路由`localhost:3000/editorialCenter/auditing/auditPending`刷新界面又 `http://localhost:3000/editorialCenter/auditing/bundle.js 404 (Not Found)` ，之前怎么修复的忘记了.... 
+【问题】
+三级路由`localhost:3000/editorialCenter/auditing/auditPending`刷新界面又 `http://localhost:3000/editorialCenter/auditing/bundle.js 404 (Not Found)` 
+
+【解决】
+webpack.base.js
+
+```javascript
+output:{
+    publicPath: '/'
+}
+```
+
 
 ### 3.4.3 BrowserRouter 重定向问题
 
@@ -1031,5 +1042,6 @@ export default TableFunction;
 - 12.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）
 - 13.主题色配置
 - 14.打包之后样式引入问题
+- 15.Source Map配置及知识点
 
 github项目入口: https://github.com/jiafei2333/React-Redux-Antd

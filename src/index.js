@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import store,{history} from 'Redux/store/store';
 import App from './router';
-import './index.css'
+import 'antd/dist/antd.less';
+import './index.css';
 
 
 

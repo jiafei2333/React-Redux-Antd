@@ -3,12 +3,6 @@ import Loadable from 'react-loadable';
 import Loading from 'Components/Base/Loading';
 import {dynamicsUrl} from 'Util/commonFun';
 
-const loadingFun = (path) =>{
-    return Loadable({
-        loader: () => import('Pages/Home/Home'),
-        loading: Loading,
-    })
-}
 
 const initialState = {
     routeData: [
@@ -105,7 +99,7 @@ const initialState = {
 };
 
 export default function(state=initialState, action){
-    const {type, payload, appReduce} = action;
+    const {type, payload, mainMenu} = action;
     switch(type){
         case types.SET_PARAMS_ROUTER:
             // 添加路由
@@ -113,7 +107,6 @@ export default function(state=initialState, action){
             let _index = state.routeData.findIndex(item=>item.path === payload.path);            
             if(_index === -1){ // 添加
                 let _component = state.routeData.find(item=>item.path === payload.pathTemp);
-                console.log("line77-------------", _component);
                 if(_component){
                     let _obj = {
                         path: payload.path,
@@ -125,14 +118,19 @@ export default function(state=initialState, action){
                 
             }
             // 二级顶部菜单 curSliderKey 二级 thirdSliderKey 三级
-            let tempSlider = dynamicsUrl(payload.path.substring(1), "", "", appReduce.mainMenu);
-            console.log("tempSlider-------------------------:",tempSlider);
+            let tempSlider = dynamicsUrl(payload.path.substring(1), "", "", mainMenu);
             return {
                 ...state,
                 routeData: _tempData,
                 sliderData: tempSlider
             }
             break;
+        case types.SET_PARAMS_DATA:
+            return {
+                ...state,
+                [`${payload['paramsName']}`]: payload.paramsValue
+            }
+            break
         default:
             return state;
     }

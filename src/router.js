@@ -58,8 +58,8 @@ const App = ({history, store}) =>{
     history.listen((location, action) => {
         console.log("路由监听~~~~~~~~~~~~", location);
         let _store = store.getState();
-        let _obj = routeListen(_store.appReduce, _store.routerReducer);
-        _obj && store.dispatch({type: types.SET_PARAMS_ROUTER, payload: _obj, appReduce: _store.appReduce});
+        let _obj = routeListen(_store.appReduce.mainMenu, _store.routerReducer);
+        _obj && store.dispatch({type: types.SET_PARAMS_ROUTER, payload: _obj, mainMenu: _store.appReduce.mainMenu});
     })
     return (
         <ConnectedRouter history={history} >

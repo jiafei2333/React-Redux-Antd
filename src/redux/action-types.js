@@ -8,6 +8,7 @@ export const GET_MENU = 'GET_MENU';
 
 // router
 export const SET_PARAMS_ROUTER = 'SET_PARAMS_ROUTER';
+export const SET_PARAMS_DATA = 'SET_PARAMS_DATA';
 
 // editorialCenter 采编中心
 export const GET_AUDITPENDING_DATA = 'GET_AUDITPENDING_DATA';

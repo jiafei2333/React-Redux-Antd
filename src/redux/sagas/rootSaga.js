@@ -2,7 +2,7 @@ import {take,fork,put,call,select} from 'redux-saga/effects';
 import {push} from 'connected-react-router';
 import * as types from '../action-types';
 import * as homeServer from '../actionServer/home';
-import {setToken, routeListen} from 'Util/commonFun';
+import {setToken, routeListen, dynamicsUrl} from 'Util/commonFun';
 import {SET_PARAMS, SET_PARAMS_ROUTER } from '../action-types';
 import {watchGetEditorialCenterList, watchGetEditorialCenterListReview} from './editorialCenterSaga';
 
@@ -54,12 +54,21 @@ function * GetAccountRights(){
     const all = yield call(homeServer.getAccountRightsJson);
     if(all.Code === 0){
         yield put({type:types.SET_PARAMS, payload: {paramsName: 'mainMenu', paramsValue: all.Data}});
-        // 如果不是/首页，则更新路由
-        let store = yield select();
-        let _obj = routeListen(store.appReduce, store.routerReducer);
-        if(_obj !== false){
-            yield put({type: types.SET_PARAMS_ROUTER, payload: _obj});
+        // 如果是editorialCenter采编审发模块一级，则追加路由且设置左侧二级菜单
+        // 如果是采编审发三级目录，则只设置二级菜单数据
+        let url = window.location.pathname;
+        let urlSplit = url.split("/");
+        if(urlSplit.length === 2 && urlSplit[1] === 'editorialCenter'){
+            let routerReducer = yield select(v=>v.routerReducer);
+            let _obj = routeListen(all.Data, routerReducer);
+            if(_obj !== false){
+                yield put({type: types.SET_PARAMS_ROUTER, payload: _obj, mainMenu: all.Data});
+            }
+        }else if(urlSplit.length === 4 && urlSplit[1] === 'editorialCenter'){
+            let tempSlider = dynamicsUrl(urlSplit[1], urlSplit[2], urlSplit[3], all.Data);
+            yield put({type: types.SET_PARAMS_DATA, payload:{paramsName: 'sliderData', paramsValue: tempSlider}});
         }
+        
     }
 } 
 // 页面刷新基础配置
