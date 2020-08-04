@@ -9,10 +9,11 @@ const initialState = {
         {
             path: '/',
             needAuth: true, // true 需要判断是否登录
-            component:  Loadable({
-                loader: () => import('Pages/Home/Home'),
-                loading: Loading,
-            })
+            // component:  Loadable({
+            //     loader: () => import('Pages/Home/Home'),
+            //     loading: Loading,
+            // })
+            component:  Loading
         },
         {
             path: '/login',

@@ -9,6 +9,7 @@ import TableFunction from '../components/TableFunction';
 import {getEditorialCenterListJson, getArticleGetReviewStatusJson} from 'Redux/actionServer/content';
 import useRequest from '../hooks/useRequest';
 import {pageButton} from 'Util/commonFun';
+import '../style.less';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -93,7 +94,7 @@ function getColumns(){
 const AuditPending = () =>{
     const [{timeV, Keyword, ReviewStatusData, ReviewStatus }, dispatch] = useReducer(reducer, initialState);
 
-    // 本页面组件的参数项(不唯一，所以不封装)
+     // 本页面组件的参数项(不唯一，所以不封装)
     const [params, setParams] = useState({
         Keyword: "",
         SSubmitTime: "",
@@ -104,14 +105,14 @@ const AuditPending = () =>{
     });
     // 自定义hook
     const {data, loading, PageIndex, PageSize, setPagination} = useRequest(()=>{
-        let new_params = Object.assign({}, params, {PageIndex: PageIndex, PageSize: PageSize}); // 拼接列表参数
+        let new_params = Object.assign({}, params, {PageIndex: PageIndex, PageSize: PageSize});// 拼接列表参数
         return getEditorialCenterListJson(new_params);
     }, [params]);
     // 顶部tab切换数据
     const mainMenu = useSelector(state => state.appReduce.mainMenu);
 
 
-    /* --------------- 筛选操作     ---------------------------------------------------------------------------*/
+    /* --------------- 筛选操作    ---------------------------------------------------------------------------*/
     // 时间控件
     const setRangePicker = useCallback((value) => {
         dispatch({type: 'SetParams', paramsN: 'timeV', paramsV: value});
@@ -120,7 +121,7 @@ const AuditPending = () =>{
     const searchInput = useCallback((e) => {
         dispatch({type: 'SetParams', paramsN: 'Keyword', paramsV: e.target.value});
     }, [Keyword])
-    // 状态
+     // 状态
     // 获取审核状态数据
     useEffect(()=>{
         getArticleGetReviewStatusJson()
@@ -142,20 +143,22 @@ const AuditPending = () =>{
         setParams(Object.assign({}, params, {Keyword: "", SSubmitTime: "", ESubmitTime: "", ReviewStatus: initialReviewStatus.Value}));
         dispatch({type: 'SetParams', paramsN: 'ReviewStatus', paramsV: initialReviewStatus});
     }, []);
-    // 筛选操作
+     // 筛选操作
     const searchFun = () => {
-        if(PageIndex !== 1) setPagination({current: 1, pageSize: PageSize}); // 添加搜索条件，PageIndex 初始化
+        if(PageIndex !== 1) setPagination({current: 1, pageSize: PageSize});  // 添加搜索条件，PageIndex 初始化
         setParams(Object.assign({}, params, {Keyword: Keyword, SSubmitTime: timeV ? moment(timeV[0]).format('YYYY-MM-DD') : "", ESubmitTime: timeV ? moment(timeV[1]).format('YYYY-MM-DD') : "", ReviewStatus: ReviewStatus.Value,}));
     };
 
-    /** -----------------  权限按钮操作   -------------------------------------------------------------------**/
+    /** -----------------  权限按钮操作  -------------------------------------------------------------------**/
 
 
   return (
     <>
         <EditorialCenterMenu mainMenu={mainMenu} />
-        {/* 筛选条件 */}
+         {/* 筛选条件 */}
         <div className={'searchBox'}>
+            <span>关键词：</span>
+            <Input placeholder="请输入关键词" value={Keyword}  onChange={searchInput} style={{width: 160}} className={'marR20'}/>
             <span>提交时间：</span>
             <RangePicker onChange={setRangePicker}  value={timeV} className={'marR20'}/>
             <span >审核状态：</span>
@@ -169,12 +172,10 @@ const AuditPending = () =>{
             })
             }
             </Select>
-            <span>关键词：</span>
-            <Input placeholder="请输入关键词" value={Keyword}  onChange={searchInput} style={{width: 160}} className={'marR20'}/>
             <Button onClick={searchFun}type="primary" className={'marR20'} >筛选</Button>
             <Button onClick={clearState}>清空</Button>
         </div>
-        {/* 按钮权限 */}
+         {/* 按钮权限 */}
         <div className={'searchBox'}>
             {Boolean(pageButton(mainMenu,'MyReviewAr_Return'))&&<Button className={'marR20'} 
             // disabled={this.state.checked} 

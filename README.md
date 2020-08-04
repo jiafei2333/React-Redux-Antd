@@ -630,6 +630,15 @@ takeLatest('login',loginFunc)
 与takeLatest不同的是，takeLatest是会监听执行最近的那个被触发的action。
 在任何时刻 takeLatest 只允许执行一个 loginFunc 任务，并且这个任务是最后被启动的那个，如果之前已经有一个任务在执行，那之前的这个任务会自动被取消。
 
+## 5.3 webpack
+
+### 5.3.1 Source Map
+
+SourceMap是一种映射关系。当项目运行后，如果出现错误，我们可以利用sourceMap反向定位到源码。
+sourceMap就是一个信息文件，里面储存着打包前的位置信息。也就是说，转换后的代码的每一个位置，所对应的转换前的位置。
+
+相关文章：https://juejin.im/post/6844903971648372743
+
 
 # 6. 功能模块
 
@@ -1041,7 +1050,18 @@ export default TableFunction;
 - 11.<s>动态加载组件（react-loadable）</s>（完成）
 - 12.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）
 - 13.主题色配置
-- 14.打包之后样式引入问题
-- 15.Source Map配置及知识点
+- 14.打包问题、引入样式问题
+- 15.<s>Source Map配置及知识点</s>（完成）
+- 16.<s>生产环境打包时拷贝web.config文件</s>（完成）
+- 17.登录判断 PrivateRoute
 
 github项目入口: https://github.com/jiafei2333/React-Redux-Antd
+
+
+
+tips:
+react-template添加配置
+1. webpack.prod.js
+2. webpack.base.js
+3. Loading组件和loading图
+4. babel 和 package.json

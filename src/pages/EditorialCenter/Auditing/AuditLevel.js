@@ -9,6 +9,7 @@ import TableFunction from '../components/TableFunction';
 import {getEditorialCenterListReviewJson, getArticleGetReviewStatusJson} from 'Redux/actionServer/content';
 import useRequest from '../hooks/useRequest';
 import {pageButton} from 'Util/commonFun';
+import '../style.less';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -111,6 +112,14 @@ function getColumns(){
 }
 
 const AuditLevel = () =>{
+
+
+    fetch("https://api.github.com/users/jiafei2333/repos")
+    .then(res=>res.json())
+    .then(data=>{
+      console.log("data:------------------------",data);
+    })
+
     const [{timeV, Keyword, ReviewStatusData, ReviewStatus }, dispatch] = useReducer(reducer, initialState);
 
     // 本页面组件的参数项(不唯一，所以不封装)

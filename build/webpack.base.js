@@ -9,9 +9,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = (env) =>{
     let isDev = env.development;
-    console.log("----------isDev-------------", isDev);
     const base = {
-        devtool:isDev?'cheap-module-eval-source-map':false,
+        devtool:isDev?'eval-cheap-module-source-map':false,
         entry:'./src/index.js',
         output:{
             filename:'[name].[hash].js',

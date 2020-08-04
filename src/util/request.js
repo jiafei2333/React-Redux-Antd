@@ -97,16 +97,12 @@ function _fetch(url, options){
             })
         ])
     }
-    NProgress.start();    // 页面开始加载时调用 start 方法
+    
     return request
     .then(checkStatus)
     .then(res=>parseJSON(res, newOptions))
     .then(res=>{
-         // loading.global 为 false 时表示加载完毕
-            NProgress.done();  // 页面请求完毕时调用 done 方法
-         //   currHref = href;   // 将新页面的 href 值赋值给 currHref
         
-        // console.log("request res:",res);
         if(res.Code !== 0){
             message.error(res.Message)
             throw res.Message;
