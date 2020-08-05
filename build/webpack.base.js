@@ -7,7 +7,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // 抽离css样式
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-module.exports = (env) =>{
+// Dll
+const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
+// 费时分析
+const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin');
+const smwp = new SpeedMeasureWebpackPlugin();
+
+module.exports = smwp.wrap((env) =>{
     let isDev = env.development;
     const base = {
         devtool:isDev?'eval-cheap-module-source-map':false,
@@ -16,6 +23,9 @@ module.exports = (env) =>{
             filename:'[name].[hash].js',
             path:path.resolve(__dirname,'../dist'),
             publicPath: '/'
+        },
+        stats: {
+            timings: true,
         },
         plugins:[ // 执行顺序 从上到下
             new CleanWebpackPlugin(), // 每次打包之前都清空dist目录下的文件
@@ -30,7 +40,15 @@ module.exports = (env) =>{
             }),
             !isDev && new MiniCssExtractPlugin({ // 抽离css
                 filename: "[name].[hash:5].css",
-            })
+            }),
+            // // 构建时会引用动态链接库的内容
+            // new DllReferencePlugin({
+            //     manifest: path.resolve(__dirname, '../dll/manifest.json')
+            // }),
+            // // 需要手动引入react.dll.js
+            // new AddAssetHtmlWebpackPlugin({
+            //     filepath: path.resolve(__dirname, '../dll/react.dll.js')
+            // })
         ].filter(Boolean),
         module:{
             rules:[
@@ -59,7 +77,8 @@ module.exports = (env) =>{
                 },
                 {
                     test: /\.js$/,
-                    use: 'babel-loader'
+                    use: 'babel-loader',
+                    include:path.resolve(__dirname, '../src')
                 },
                 {
                     test: /\.(jpe?g|png|gif)$/,
@@ -98,4 +117,4 @@ module.exports = (env) =>{
     }else{
         return merge(base,prod)
     }
-}
+})

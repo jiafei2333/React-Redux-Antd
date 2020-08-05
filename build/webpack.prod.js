@@ -7,8 +7,6 @@ const TerserWebpackPlugin = require('terser-webpack-plugin');
 // 拷贝文件
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-
-
 module.exports = {
     mode:'production',
     optimization: { // 优化项

@@ -483,6 +483,29 @@ devServer:{
 
 在生产环境下，我这里的后台是.net环境，远程桌面是用IIS配置的站点环境，只要在服务器端下载安装 https://www.iis.net/downloads/microsoft/url-rewrite，然后在打包好的跟目录下添加项目中的 `web.config`文件即可。
 
+## 3.5 优化问题
+
+### 3.5.1 babel
+
+#### babel-import-plugin
+
+在.babelrc中配置
+```bash
+"plugins": [
+        ["import",
+            {
+                "libraryName": "antd",
+                "libraryDirectory": "es",
+                "style": true   // or 'css'
+            }
+        ]
+]
+```
+跟没有配置对比，多出了将近300k的css文件，其他文件的大小都是一样的 ？？？为啥
+[](https://jiafei2333.github.io/html/images/babel-error-Picture.png "")
+
+
+
 # 4. 报错
 
 ## 4.1 ant 引入.less后缀的样式文件
@@ -1018,16 +1041,39 @@ TableFunction.propTypes = {
 export default TableFunction;
 ```
 
+# 7. Webpack 优化
+
+见`webpack.prod.js`文件，查看 ` new BundleAnalyzerPlugin() `打包分析结果
+
+## 7.1 按需加载antd
+
+`npm install --save-dev babel-import-plugin`
+
+打包结果分析：失败，见 3.5
+
+## 7.2 优化构建速度
+
+https://jiafei2333.github.io/2019/11/14/Webpack-majorization/ 见 5.DllPlugin && DllReferencePlugin
+
+[webpack.dll.js](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.dll.js "")
+
+## 7.3 SplitChunks
 
 
 
 
 
+# 8. 配置文件
 
+[webpack.base.js](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.base.js "")
 
+[webpack.dev.js](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.dev.js "")
 
+[webpack.prod.js](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.prod.js "")
 
-# 7. 相关文章
+[.babelrc](https://github.com/jiafei2333/React-Redux-Antd/blob/master/.babelrc "")
+
+# 8. 相关文章
 
 1. https://juejin.im/post/5b4de4496fb9a04fc226a7af
 2. https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
@@ -1035,7 +1081,7 @@ export default TableFunction;
 4. https://juejin.im/post/5d6771375188257573636cf9
 
 
-# 8. 未完成功能
+# 9. 未完成功能
 
 - 1.<s>全局列表页loading</s>（完成，封装的自定义hook）
 - 2.按钮的loading
@@ -1065,3 +1111,4 @@ react-template添加配置
 2. webpack.base.js
 3. Loading组件和loading图
 4. babel 和 package.json
+5. webpack.dll.js

@@ -1,5 +1,6 @@
 {
     "presets": [
+        "@babel/preset-typescript",
         ["@babel/preset-env",{
             "useBuiltIns":"usage", 
             "corejs":3
@@ -10,7 +11,7 @@
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
         ["@babel/plugin-proposal-class-properties",{"loose":true}],
         ["react-hot-loader/babel"],
-        ["@babel/plugin-syntax-dynamic-import"],
+        ["@babel/plugin-syntax-dynamic-import"], // 动态加载路由 和 react-loadable 搭配使用
         ["@babel/plugin-transform-runtime"]
     ]
 }

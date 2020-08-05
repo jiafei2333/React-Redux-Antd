@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack');
+
 module.exports = {
     mode:'development',
     devServer:{
@@ -12,7 +13,7 @@ module.exports = {
     },
     plugins: [
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
+        new webpack.HotModuleReplacementPlugin()
     ],
     resolve: {
         alias:{
