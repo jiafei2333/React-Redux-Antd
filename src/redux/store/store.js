@@ -13,15 +13,15 @@ export const history = createBrowserHistory();
 
 const initialState = {};
 
-
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
 const store = createStore(
     rootReducers(history),
     initialState, 
-    compose(
+    composeEnhancers(
         applyMiddleware(
-            routerMiddleware(history), 
+            routerMiddleware(history),
             logger,
             sagaMiddleware // 将sagaMiddleware 中间件传入到 applyMiddleware 函数中
         )
