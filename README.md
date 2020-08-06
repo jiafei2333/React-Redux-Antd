@@ -541,6 +541,13 @@ import 'antd/dist/antd.less';
 
 当前版本 `"less-loader": "^6.1.0"`，查了之后都说v6有兼容性问题，所以将版本改为`"less-loader": "5.0.0",`,这样就可以了，没有报错。
 
+## 4.2 speed-measure-webpack-plugin
+
+`speed-measure-webpack-plugin` 和 `HotModuleReplacementPlugin` 不能同时使用，否则会报错。所以在开发环境中先把费时分析插件注释，见[webpack.base.js]。
+
+
+
+
 
 # 5. 知识点
 
@@ -1150,24 +1157,26 @@ optimization:{
 
 # 9. 未完成功能
 
-- 1.<s>全局列表页loading</s>（完成，封装的自定义hook）
-- 2.按钮的loading
-- 3.nprogress
-- 4.<s>saga代替thunk</s>（完成）
-- 5.<s>配置node后台服务</s>（完成）
-- 6.antd中局部修改默认样式
-- 7.<s>react-hot-loader</s>（完成）
-- 8.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）
-- 9.<s>路由监听，拼接路由</s>（完成）
-- 10.<s>自定义hooks封装</s>（完成）
-- 11.<s>动态加载组件（react-loadable）</s>（完成）
-- 12.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）
-- 13.主题色配置
-- 14.打包问题、引入样式问题
-- 15.<s>Source Map配置及知识点</s>（完成）
-- 16.<s>生产环境打包时拷贝web.config文件</s>（完成）
-- 17.登录判断 PrivateRoute
-- 18.图片打包优化，小图片生成base64等
+- 1.loading
+  - <s>列表页loading</s>（完成，封装的自定义hook）
+  - <s>组件动态加载loading</s>（完成）
+  - 按钮loading
+- 2.nprogress
+- 3.<s>saga代替thunk</s>（完成）
+- 4.<s>配置node后台服务</s>（完成）
+- 5.antd中局部修改默认样式
+- 6.<s>react-hot-loader</s>（完成）
+- 7.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）
+- 8.<s>路由监听，拼接路由</s>（完成）
+- 9.<s>自定义hooks封装</s>（完成）
+- 10.<s>动态加载组件（react-loadable）</s>（完成）
+- 11.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）
+- 12.主题色配置
+- 13.打包问题、引入样式问题
+- 14.<s>Source Map配置及知识点</s>（完成）
+- 15.<s>生产环境打包时拷贝web.config文件</s>（完成）
+- 16.登录判断 PrivateRoute
+- 17.图片打包优化，小图片生成base64等
 
 github项目入口: https://github.com/jiafei2333/React-Redux-Antd
 

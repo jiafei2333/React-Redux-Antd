@@ -4,8 +4,8 @@ import './style.less';
 
 const Loading = ()=>{
     return (
-        <div>
-            <img src={loadingPic} className={loadingPic} />
+        <div className={'loadingBox'}>
+            <img src={loadingPic} className={'loadingImg'} />
         </div>
     )
 }

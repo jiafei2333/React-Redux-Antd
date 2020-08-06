@@ -15,7 +15,8 @@ const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin');
 const smwp = new SpeedMeasureWebpackPlugin();
 
-module.exports = smwp.wrap((env) =>{
+// module.exports = smwp.wrap((env) =>{ // 费时分析插件
+    module.exports = (env) =>{
     let isDev = env.development;
     const base = {
         devtool:isDev?'eval-cheap-module-source-map':false,
@@ -120,4 +121,5 @@ module.exports = smwp.wrap((env) =>{
     }else{
         return merge(base,prod)
     }
-})
+}
+// )

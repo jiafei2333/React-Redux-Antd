@@ -14,7 +14,55 @@
   }
 
 /* loading 样式*/
-.loadingPic{
-  animation: loadingCircle 1s forwards;
-  -webkit-animation: loadingCircle 1s forwards;
+.loadingBox{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.loadingImg{
+  animation: loadingCircle 1s infinite;
+  -webkit-animation: loadingCircle 1s infinite;
+}
+
+.myTransform(@deg: 0deg){
+  transform: rotate(@deg);
+  -webkit-transform: rotate(@deg);
+  -moz-transform: rotate(@deg);
+  -o-transform: rotate(@deg);
+  -ms-transform: rotate(@deg);
+}
+
+@keyframes loadingCircle{
+  from{
+    .myTransform(@deg: 0deg)
+  }
+  to{
+    .myTransform(@deg: -360deg)
+  }
+}
+@-moz-keyframes loadingCircle{
+  from{
+    .myTransform(@deg: 0deg)
+  }
+  to{
+    .myTransform(@deg: -360deg)
+  }
+}
+@-webkit-keyframes loadingCircle{
+  from{
+    .myTransform(@deg: 0deg)
+  }
+  to{
+    .myTransform(@deg: -360deg)
+  }
+}
+
+@-o-keyframes loadingCircle{
+  from{
+    .myTransform(@deg: 0deg)
+  }
+  to{
+    .myTransform(@deg: -360deg)
+  }
 }
