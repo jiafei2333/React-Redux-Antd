@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const dev = require('./webpack.dev');
 const prod = require('./webpack.prod');
@@ -49,6 +50,8 @@ module.exports = smwp.wrap((env) =>{
             // new AddAssetHtmlWebpackPlugin({
             //     filepath: path.resolve(__dirname, '../dll/react.dll.js')
             // })
+            //忽略 moment 下的 ./locale 目录
+            // new webpack.IgnorePlugin(/^\.\/locale$/, /antd\/es$/)
         ].filter(Boolean),
         module:{
             rules:[
@@ -78,7 +81,7 @@ module.exports = smwp.wrap((env) =>{
                 {
                     test: /\.js$/,
                     use: 'babel-loader',
-                    include:path.resolve(__dirname, '../src')
+                    include: path.resolve(__dirname, "../src")
                 },
                 {
                     test: /\.(jpe?g|png|gif)$/,
@@ -106,7 +109,7 @@ module.exports = smwp.wrap((env) =>{
                 Pages: path.resolve(__dirname, '../src/pages/'),
                 Assets: path.resolve(__dirname, '../src/assets/')
             },
-            extensions: [".js", ".jsx", ".json", ".css", ".less",]
+            extensions: [".js", ".jsx", ".json", ".css", ".less"]
         },
         optimization:{
             usedExports:true // 配置了之后在开发模式下，打包生成的bundle文件中会有提示文字没有用sum这个模块，但是还是会打包出来

@@ -1043,6 +1043,8 @@ export default TableFunction;
 
 # 7. Webpack 优化
 
+[Webpack 优化 详解](https://jiafei2333.github.io/2019/11/14/Webpack-majorization/ "")
+
 见`webpack.prod.js`文件，查看 ` new BundleAnalyzerPlugin() `打包分析结果
 
 ## 7.1 按需加载antd
@@ -1053,14 +1055,78 @@ export default TableFunction;
 
 ## 7.2 优化构建速度
 
+### 7.2.1 Dll
+
 https://jiafei2333.github.io/2019/11/14/Webpack-majorization/ 见 5.DllPlugin && DllReferencePlugin
 
 [webpack.dll.js](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.dll.js "")
 
+```bash
+General output time took 38.24 secs
+```
+构建时能够看到`delegated`证明是用引入的`dll/`下提前生成的文件，但是看了耗时，时间并没有缩短，反而还增加了......待解决。
+
+### 7.2.2 include/exclude
+
+[使用include]
+```bash
+{
+    test: /\.js$/,
+    use: 'babel-loader',
+    include: path.resolve(__dirname, "../src")
+},
+```
+没有配置`include`时，打包耗时如下：
+![](https://jiafei2333.github.io/html/images/babel-optimization01.png "")
+配置了`include`后，打包耗时如下：
+![](https://jiafei2333.github.io/html/images/babel-optimization02.png "")
+可以看出构建时间大大缩短了，特别是`babel-loader`的时间，打包时的`babel-loader`耗时同样由20s+缩短为3s+，大大加快了打包时间。
+
+[使用exclude]
+```bash
+{
+    test: /\.js$/,
+    use: 'babel-loader',
+    exclude: path.resolve(__dirname, "../node_modules/")
+},
+```
+配置了`exclude`后，构建耗时如下：
+![](https://jiafei2333.github.io/html/images/babel-optimization03.png "")
+
 ## 7.3 SplitChunks
 
-
-
+```javascript
+optimization:{
+	splitChunks: {
+	// initial 只操作同步的，all 所有的，async异步的（默认）
+	  chunks: 'async', // 默认支持异步的代码分割import()
+	  minSize: 30000, // 文件超过30k 就会抽离
+	  maxSize: 0,  // 没有最大上限
+	  minChunks: 1, // 最少模块引用一次才抽离
+	  maxAsyncRequests: 5, // 最大异步请求数，最多5个
+	  maxInitialRequests: 3, // 最大初始化请求数，即最多首屏加载3个请求
+	  automaticNameDelimiter: '~', // 抽离的命名分隔符 xxx~a~b (如果是a、b文件引用)
+	  automaticNameMaxLength: 30, // 名字最大长度
+	  name: true,
+	  cacheGroups: { // 缓存组  这里面也可以配置上面的配置
+		vendors: { // 先抽离第三方
+		  test: /[\\/]node_modules[\\/](jquery)|(lodash)/,
+		  priority: -1
+		},
+		react:{
+			test: /[\\/]node_modules[\\/](react|react-dom)/,
+			priority: -2, 
+		},
+		default: { 
+		  minChunks: 2,
+		  priority: -20, // 优先级, -2比 -20大
+		  reuseExistingChunk: true
+		}
+	  }
+	}
+}
+```
+打包之后发现效果不明显，可能是这个项目代码太少了....待解释。
 
 
 # 8. 配置文件
@@ -1079,6 +1145,7 @@ https://jiafei2333.github.io/2019/11/14/Webpack-majorization/ 见 5.DllPlugin &&
 2. https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
 3. https://juejin.im/post/5b440f7ae51d45195759f345
 4. https://juejin.im/post/5d6771375188257573636cf9
+5. [Webpack 优化](https://juejin.im/post/6844904093463347208 "")
 
 
 # 9. 未完成功能
@@ -1100,6 +1167,7 @@ https://jiafei2333.github.io/2019/11/14/Webpack-majorization/ 见 5.DllPlugin &&
 - 15.<s>Source Map配置及知识点</s>（完成）
 - 16.<s>生产环境打包时拷贝web.config文件</s>（完成）
 - 17.登录判断 PrivateRoute
+- 18.图片打包优化，小图片生成base64等
 
 github项目入口: https://github.com/jiafei2333/React-Redux-Antd
 
