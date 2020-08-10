@@ -1138,13 +1138,15 @@ optimization:{
 
 # 8. 配置文件
 
-[webpack.base.js](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.base.js "")
+[[webpack.base.js]](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.base.js "")
 
-[webpack.dev.js](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.dev.js "")
+[[webpack.dev.js]](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.dev.js "")
 
-[webpack.prod.js](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.prod.js "")
+[[webpack.prod.js]](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.prod.js "")
 
-[.babelrc](https://github.com/jiafei2333/React-Redux-Antd/blob/master/.babelrc "")
+[[webpack.dll.js]](https://github.com/jiafei2333/React-Redux-Antd/blob/master/build/webpack.dll.js "")
+
+[[.babelrc]](https://github.com/jiafei2333/React-Redux-Antd/blob/master/.babelrc "")
 
 # 8. 相关文章
 
@@ -1164,7 +1166,7 @@ optimization:{
 - 2.nprogress
 - 3.<s>saga代替thunk</s>（完成）
 - 4.<s>配置node后台服务</s>（完成）
-- 5.antd中局部修改默认样式
+- 5.<s>antd中局部修改默认样式</s>（完成 不需要global包裹）
 - 6.<s>react-hot-loader</s>（完成）
 - 7.<s>强制刷新时获取基本信息(菜单权限、配置信息等等)</s>（完成）
 - 8.<s>路由监听，拼接路由</s>（完成）
