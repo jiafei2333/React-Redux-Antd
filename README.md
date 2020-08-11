@@ -676,7 +676,7 @@ sourceMap就是一个信息文件，里面储存着打包前的位置信息。�
 
 ## 6.1 采编中心
 
-src/pages/EditorialCenter
+src/pages/EditorialCenter/Auditing 审模块
 
 自定义`useRequest hook` 封装统一列表逻辑，包括获取列表数据，分页；其中每个页面组件顶部的搜索条件不唯一，所以这里只将 请求列表数据的接口 + PageIndex + PageSize，进行了封装，各个页面的参数以Object.assign 拼接的方式传入。
 
@@ -1048,6 +1048,14 @@ TableFunction.propTypes = {
 export default TableFunction;
 ```
 
+### 6.1.2 封装全局按钮loading
+
+暂时，发模块：列表、条件筛选，获取数据都走redux流程
+
+
+
+
+
 # 7. Webpack 优化
 
 [Webpack 优化 详解](https://jiafei2333.github.io/2019/11/14/Webpack-majorization/ "")
@@ -1154,7 +1162,7 @@ optimization:{
 2. https://medium.com/stashaway-engineering/react-redux-tips-better-way-to-handle-loading-flags-in-your-reducers-afda42a804c6
 3. https://juejin.im/post/5b440f7ae51d45195759f345
 4. https://juejin.im/post/5d6771375188257573636cf9
-5. [Webpack 优化](https://juejin.im/post/6844904093463347208 "")
+5. [[Webpack 优化]](https://juejin.im/post/6844904093463347208 "")
 
 
 # 9. 未完成功能

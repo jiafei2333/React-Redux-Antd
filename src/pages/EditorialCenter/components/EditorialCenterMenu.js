@@ -24,7 +24,7 @@ const EditorialCenterMenu = ({mainMenu}) =>{
     //     });
     //   };
     return (
-        <div>
+        <div className={'menuSec'}>
             {
                 EditorialNav?
                 <Menu

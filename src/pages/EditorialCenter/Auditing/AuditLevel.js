@@ -112,14 +112,6 @@ function getColumns(){
 }
 
 const AuditLevel = () =>{
-
-
-    fetch("https://api.github.com/users/jiafei2333/repos")
-    .then(res=>res.json())
-    .then(data=>{
-      console.log("data:------------------------",data);
-    })
-
     const [{timeV, Keyword, ReviewStatusData, ReviewStatus }, dispatch] = useReducer(reducer, initialState);
 
     // 本页面组件的参数项(不唯一，所以不封装)

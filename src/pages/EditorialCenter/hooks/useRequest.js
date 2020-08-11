@@ -1,6 +1,6 @@
 import {useState, useEffect, useCallback} from 'react';
 
-const useRequest = (fn, dependence) =>{
+const useRequest = (fn, dependence, callback) =>{
     const [data, setData] = useState({Items:[], Count: 0});
     const [loading, setLoading] = useState(false);
     const [PageIndex, setPageIndex] = useState(1);
@@ -17,6 +17,8 @@ const useRequest = (fn, dependence) =>{
         })
         .finally(()=>{
             setLoading(false);
+            // 回调
+            callback && callback();
         })
     }, dependence);
 

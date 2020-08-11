@@ -4,7 +4,7 @@ import * as types from '../action-types';
 import * as homeServer from '../actionServer/home';
 import {setToken, routeListen, dynamicsUrl} from 'Util/commonFun';
 import {SET_PARAMS, SET_PARAMS_ROUTER } from '../action-types';
-import {watchGetEditorialCenterList, watchGetEditorialCenterListReview} from './editorialCenterSaga';
+import {watchGetProjectApp, watchGetWaitingPublishs} from './editorialCenterSaga';
 
 
 // 登录
@@ -88,6 +88,6 @@ export default function* rootSaga() {
     yield fork(watchPostLoginIn);
     yield fork(watchGetSiteConfig);
     yield fork(watchGetThemeConfig);
-    yield fork(watchGetEditorialCenterList);
-    yield fork(watchGetEditorialCenterListReview);
+    yield fork(watchGetProjectApp);
+    yield fork(watchGetWaitingPublishs);
 }

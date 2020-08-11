@@ -8,6 +8,7 @@ import Loading from 'Components/Base/Loading';
 import TableFunction from '../components/TableFunction';
 import {getEditorialCenterListJson, getArticleGetReviewStatusJson} from 'Redux/actionServer/content';
 import useRequest from '../hooks/useRequest';
+import useLoading from '../hooks/useLoading';
 import {pageButton} from 'Util/commonFun';
 import '../style.less';
 
@@ -111,6 +112,9 @@ const AuditPending = () =>{
     // 顶部tab切换数据
     const mainMenu = useSelector(state => state.appReduce.mainMenu);
 
+    // 自定义useLoading hook
+    const {loadingState, setLoading} = useLoading();
+
 
     /* --------------- 筛选操作    ---------------------------------------------------------------------------*/
     // 时间控件
@@ -145,6 +149,7 @@ const AuditPending = () =>{
     }, []);
      // 筛选操作
     const searchFun = () => {
+        setLoading(true);
         if(PageIndex !== 1) setPagination({current: 1, pageSize: PageSize});  // 添加搜索条件，PageIndex 初始化
         setParams(Object.assign({}, params, {Keyword: Keyword, SSubmitTime: timeV ? moment(timeV[0]).format('YYYY-MM-DD') : "", ESubmitTime: timeV ? moment(timeV[1]).format('YYYY-MM-DD') : "", ReviewStatus: ReviewStatus.Value,}));
     };
@@ -172,8 +177,8 @@ const AuditPending = () =>{
             })
             }
             </Select>
-            <Button onClick={searchFun}type="primary" className={'marR20'} >筛选</Button>
-            <Button onClick={clearState}>清空</Button>
+            <Button onClick={searchFun} type="primary" loading={loadingState} className={'marR20'} >筛选</Button>
+            <Button onClick={clearState} loading={loadingState}>清空</Button>
         </div>
          {/* 按钮权限 */}
         <div className={'searchBox'}>
