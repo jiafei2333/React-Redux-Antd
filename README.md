@@ -1053,7 +1053,25 @@ export default TableFunction;
 暂时，发模块：列表、条件筛选，获取数据都走redux流程
 
 
+## 6.2 接入Sentry
 
+这里的内容直接登录的Sentry服务，创建Project即可看到：
+
+1. Add the Sentry SDK as a dependency using yarn or npm:
+`yarn add @sentry/react | npm install @sentry/react`
+
+2. Connecting the SDK to Sentry
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import * as Sentry from '@sentry/react';
+import App from './App';
+
+Sentry.init({dsn: "http://XXXXXXXX"});
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+接入完成，当项目中发送错误时，会发送信息到Sentry服务，具体请见 [[跳转]](https://jiafei2333.github.io/2020/08/01/Sentry/)。
 
 
 # 7. Webpack 优化

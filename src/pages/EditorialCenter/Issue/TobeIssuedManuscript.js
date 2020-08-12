@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Icon, Checkbox, Modal, Table, Input, Button,DatePicker} from 'antd';
+import { PictureOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { get, cloneDeep, map} from 'lodash';
 import {pageButton} from 'Util/commonFun';
@@ -32,11 +33,11 @@ const columns = [
       width:'30%',
       render: (text, record) => ( 
       <div>
-          {
-          record.HasImage === true &&   <Icon type="picture" style={{color:'#999',marginRight:'3px'}}/>
+           {
+            record.HasImage === true &&   <PictureOutlined />
           }
           {
-          record.HasVideo === true &&   <Icon type="play-square" style={{color:'#999'}}/>
+            record.HasVideo === true &&   <VideoCameraOutlined />
           }
           <a onClick={()=>this.onClickShowSynchronousModel("RouteToWritingDetails", record.ArticleID)}  style={{margin: 0}}> {record.Title.length>25?record.Title.substring(0,26)+'...':record.Title} </a>
           <span>（{record.WordCount}字）</span>
@@ -295,9 +296,8 @@ class TobeIssuedManuscript extends React.Component{
                 // emptyText:()=><div><Icon type="frown-o" style={{marginRight:20}} />您还没有稿件呢！</div>
                 // }}
                 columns={columns}
-                // dataSource={get(tobeIssuedList,"Items") ?get(tobeIssuedList,"Items") : []} 
+                dataSource={get(tobeIssuedList,"Items") ? get(tobeIssuedList,"Items") : []} 
                 rowKey={'ArticleID'}
-                style={{backgroundColor:'#fff',borderRadius:'5px',margin:'0 -20px'}}
                 pagination={{
                     total:get(tobeIssuedList,"Count") ? tobeIssuedList.Count : 0,
                     showTotal:(total) => `共 ${total} 条记录 第${this.state.PageIndex}页`,
