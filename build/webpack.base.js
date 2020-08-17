@@ -38,6 +38,7 @@ const smwp = new SpeedMeasureWebpackPlugin();
                         {
                             loader: 'css-loader',
                             options:{ // 给loader传递参数
+                                modules: true, // 开启css modules 
                                 // 如果css文件引入了其他文件@import
                                 importLoaders: 2 // 1表示使用后面的一个即 'less-loader'，2表示使用后面的2个...以此类推
                         }
@@ -45,14 +46,36 @@ const smwp = new SpeedMeasureWebpackPlugin();
                 },
                 {
                     test: /\.less$/,
+                    exclude: path.resolve(__dirname, "../node_modules/"),
                     use: [
                         isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
-                        "css-loader",{
+                        {
+                            loader: "css-loader",
+                            options:{
+                                modules: true // 开启css modules 这样引入样式时 用变量代替 Style.xxxx
+                            }
+                        },
+                        "postcss-loader",
+                        {
                         loader: "less-loader",
                         options: {
-                            javascriptEnabled: true
+                            javascriptEnabled: true,
                         }
                     }]
+                },
+                {   // node_modules/下的内容不用开启 css modules
+                    test: /\.less$/,
+                    include: path.resolve(__dirname, "../node_modules/"),
+                    use: [
+                        isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+                        "css-loader",
+                        {
+                            loader: "less-loader",
+                            options: {
+                                javascriptEnabled: true,
+                            }
+                        }
+                    ]
                 },
                 {
                     test: /\.js$/,

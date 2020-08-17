@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import map from 'lodash/map';
 import SliderEditorial from 'Pages/EditorialCenter/components/SliderEditorial';
-import './style.less';
+import Style from './style.less';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -23,11 +23,11 @@ export class MainLayout extends Component {
                 history.location.pathname === '/login' ? 
                     <>{children}</> 
                     :
-                    <Layout  className="layout">
-                        <div className={'topBox'}>
-                            <div className={'topAbsolute'} style={{ float:'left', marginLeft: '40px', }}>
+                    <Layout>
+                        <div className={Style.topBox}>
+                            <div className={Style.topAbsolute} style={{ float:'left', marginLeft: '40px', }}>
                                 <Link to="/" >
-                                <img className={'logo'} src={`${siteConfig.LogoUrl}`}/>
+                                <img className={Style.logo} src={`${siteConfig.LogoUrl}`}/>
                                 </Link>
                             </div>
                             <Header>
@@ -45,7 +45,7 @@ export class MainLayout extends Component {
                         </div>
                         <Layout>
                             <Layout style={{ padding: '0 24px 24px' }}>
-                                <content className={'contentBox'}>
+                                <content className={Style.contentBox}>
                                     <SliderEditorial menuData={sliderData}  />
                                     <Content style={{ paddingLeft: 20 }}>
                                         {children}

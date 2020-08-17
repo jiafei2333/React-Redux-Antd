@@ -1,11 +1,11 @@
 import React from 'react';
 import loadingPic from 'Assets/loading.png';
-import './style.less';
+import Style from './style.less';
 
 const Loading = ()=>{
     return (
-        <div className={'loadingBox'}>
-            <img src={loadingPic} className={'loadingImg'} />
+        <div className={Style.loadingBox}>
+            <img src={loadingPic} className={Style.loadingImg} />
         </div>
     )
 }

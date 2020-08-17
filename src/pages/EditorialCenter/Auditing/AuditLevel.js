@@ -9,7 +9,7 @@ import TableFunction from '../components/TableFunction';
 import {getEditorialCenterListReviewJson, getArticleGetReviewStatusJson} from 'Redux/actionServer/content';
 import useRequest from '../hooks/useRequest';
 import {pageButton} from 'Util/commonFun';
-import '../style.less';
+import Style from '../style.less';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -176,13 +176,13 @@ const AuditLevel = () =>{
     <>
         <EditorialCenterMenu mainMenu={mainMenu} />
         {/* 筛选条件 */}
-        <div className={'searchBox'}>
+        <div className={Style.searchBox}>
             <span>关键词：</span>
-            <Input placeholder="请输入关键词" value={Keyword}  onChange={searchInput} style={{width: 160}} className={'marR20'}/>
+            <Input placeholder="请输入关键词" value={Keyword}  onChange={searchInput} style={{width: 160}} className={Style.marR20}/>
             <span>提交时间：</span>
-            <RangePicker onChange={setRangePicker}  value={timeV} className={'marR20'}/>
+            <RangePicker onChange={setRangePicker}  value={timeV} className={Style.marR20}/>
             <span >审核状态：</span>
-            <Select value={ReviewStatus.Text} onChange={selectChange} style={{ width: 120 }}  className={'marR20'}>
+            <Select value={ReviewStatus.Text} onChange={selectChange} style={{ width: 120 }}  className={Style.marR20}>
             {
             ReviewStatusData &&
             ReviewStatusData.map( (item, index)=>{
@@ -192,12 +192,12 @@ const AuditLevel = () =>{
             })
             }
             </Select>
-            <Button onClick={searchFun}type="primary" className={'marR20'} >筛选</Button>
+            <Button onClick={searchFun}type="primary" className={Style.marR20} >筛选</Button>
             <Button onClick={clearState}>清空</Button>
         </div>
         {/* 按钮权限 */}
-        <div className={'searchBox'}>
-            {Boolean(pageButton(mainMenu,'ReviewAr_Sy'))&&<Button className={'marR20'} 
+        <div className={Style.searchBox}>
+            {Boolean(pageButton(mainMenu,'ReviewAr_Sy'))&&<Button className={Style.marR20} 
             // disabled={
             //   this.state.checked === false && this.state.checkedObj.CanContinue === true ? false : true
             //   } onClick={this.onClickShowSynchronousModel.bind(this, "AuditArticleIssued")}
@@ -205,20 +205,20 @@ const AuditLevel = () =>{
 
             {
               Boolean(pageButton(mainMenu,'ReviewAr_PassSy')) &&
-              <Button className={'marR20'}
+              <Button className={Style.marR20}
               // disabled={this.state.checked === false && this.state.checkedObj.CanContinue === false ? false: true && reviewManuscriptTypeStatus === false ? false: true }
               // disabled={_AUDITEDIT}
               // onClick={this.onClickShowSynchronousModel.bind(this, 'AUDITEDIT')}
               >审核通过由编辑签发</Button>
             }
 
-            {Boolean(pageButton(mainMenu,'ReviewAr_Send'))&&<Button className={'marR20'}
+            {Boolean(pageButton(mainMenu,'ReviewAr_Send'))&&<Button className={Style.marR20}
             // disabled={this.state.checked === false && this.state.checkedObj.CanContinue === true ? false : true && this.state.checkedObj.IsFinalReview === false ? false: true}
             // disabled={_AUDITLEVELOK}
             // onClick={this.onClickShowSynchronousModel.bind(this, 'AUDITLEVELOK', 0)}
             >送审</Button>}
 
-            {Boolean(pageButton(mainMenu,'ReviewAr_Return'))&&<Button className={'marR20'} 
+            {Boolean(pageButton(mainMenu,'ReviewAr_Return'))&&<Button className={Style.marR20} 
             // disabled={
             //   this.state.checked === false && this.state.checkedObj.CanContinue === true ? false : true
             // } onClick={this.onClickShowSynchronousModel.bind(this, 'REJECT')}
@@ -227,7 +227,7 @@ const AuditLevel = () =>{
             // }
             >退回</Button>}
 
-            {Boolean(pageButton(mainMenu,'ReviewAr_ProcRecord'))&&<Button className={'marR20'} 
+            {Boolean(pageButton(mainMenu,'ReviewAr_ProcRecord'))&&<Button className={Style.marR20} 
             // disabled={this.state.checked} onClick={this.onClickShowSynchronousModel.bind(this, 'AUDITLOGGING')}
             >审核记录</Button>}
 

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import { Menu } from 'antd';
 import {getArrary, dynamicsUrl} from 'Util/commonFun';
 import {get, split} from 'lodash';
-import '../style.less';
+import Style from  '../style.less';
 
 const EditorialCenterMenu = ({mainMenu}) =>{
     const [current, setCurrent] = useState(get(split(decodeURI(window.location.href),'/'),4));
@@ -24,7 +24,7 @@ const EditorialCenterMenu = ({mainMenu}) =>{
     //     });
     //   };
     return (
-        <div className={'menuSec'}>
+        <div className={Style.menuSec}>
             {
                 EditorialNav?
                 <Menu

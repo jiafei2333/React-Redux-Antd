@@ -7,7 +7,7 @@ import { get, cloneDeep, map} from 'lodash';
 import {pageButton} from 'Util/commonFun';
 import EditorialCenterMenu from '../components/EditorialCenterMenu';
 import {GET_PROJECT_APP_REQUEST, GET_WAITING_PUBLISH_REQUEST} from 'Redux/action-types';
-import '../style.less';
+import Style from '../style.less';
 
 // const LayerSaveCheck = React.lazy(()=>import('../../../components/Layer/LayerSaveCheck'));
 // const LayerSaveCheckPending = React.lazy(()=>import('../../../components/Layer/LayerSaveCheckPending'));
@@ -255,40 +255,40 @@ class TobeIssuedManuscript extends React.Component{
         <div>
           {/* <EditorialCenterMenu sumbitData={sumbitData}></EditorialCenterMenu> */}
           <EditorialCenterMenu mainMenu={mainMenu} />
-          <div className={ `manuscriptBox maxWidthBox`} style={{paddingTop: 0,paddingBottom:0}}>
-          <div className={'subHead'}>
-            <div className={'item'}>
+          <div className={ `${Style.manuscriptBox} ${Style.maxWidthBox}`} style={{paddingTop: 0,paddingBottom:0}}>
+          <div className={Style.subHead}>
+            <div className={Style.item}>
                 <span>关键词：</span>
-                <Input placeholder="请输入关键词" value={this.state.Keyword}  onChange={this.searchInput.bind(this)} style={{width: 160}} className={'marR20'}/>
+                <Input placeholder="请输入关键词" value={this.state.Keyword}  onChange={this.searchInput.bind(this)} style={{width: 160}} className={Style.marR20}/>
                 <span>发布时间：</span>
-                <RangePicker   onChange={this.rangePicker.bind(this)} value={this.state.time ? this.state.time : ""} className={'marR20'}/>
-                <Button type="primary" className={'marR20'} onClick={this.searchFun.bind(this)}>筛选</Button>
+                <RangePicker   onChange={this.rangePicker.bind(this)} value={this.state.time ? this.state.time : ""} className={Style.marR20}/>
+                <Button type="primary" className={Style.marR20} onClick={this.searchFun.bind(this)}>筛选</Button>
                 <Button onClick={this.clearState.bind(this)}>清空</Button>
             </div>
-            <div className={'line'}></div>
-            <div className={'item'}>
+            <div className={Style.line}></div>
+            <div className={Style.item}>
                 <span>发布载体筛选：</span>
                 {
                   map(projectApp,(item,i)=>(
-                    <Button key={i} className={`btn ${this.state.AppIds.includes(item.AppID) ? 'active' : ''}`} size="small" onClick={this.projectAppChange.bind(this,item.AppID)}>{item.AppName}</Button>
+                    <Button key={i} className={`${Style.btn} ${this.state.AppIds.includes(item.AppID) ? Style.active : ''}`} size="small" onClick={this.projectAppChange.bind(this,item.AppID)}>{item.AppName}</Button>
                   ))
                 }
             </div>
-            <div className={'line'}></div>
-            <div className={'item'}>
+            <div className={Style.line}></div>
+            <div className={Style.item}>
                 <span>稿件内容：&nbsp;&nbsp;</span>
                 <Checkbox onChange={this.onMConChange.bind(this,'pic')}>含图</Checkbox>
                 <Checkbox onChange={this.onMConChange.bind(this,'vio')}>含视频</Checkbox>
             </div>
-            <div className={'line'}></div>
-            <div className={'item'}>
-              {Boolean(pageButton(mainMenu,'WaitPublish_sy'))&&<Button className={'marR20'} disabled={this.state.checked} onClick={this.onClickShowSynchronousModel.bind(this, "TobeIssued")}
+            <div className={Style.line}></div>
+            <div className={Style.item}>
+              {Boolean(pageButton(mainMenu,'WaitPublish_sy'))&&<Button className={Style.marR20} disabled={this.state.checked} onClick={this.onClickShowSynchronousModel.bind(this, "TobeIssued")}
               >签发</Button>}
 
-              {Boolean(pageButton(mainMenu,'WaitPublish_Record'))&&<Button className={'marR20'} disabled={this.state.checked} onClick={this.onClickShowSynchronousModel.bind(this, 'AUDITLOGGING')}>审核记录</Button>}
+              {Boolean(pageButton(mainMenu,'WaitPublish_Record'))&&<Button className={Style.marR20} disabled={this.state.checked} onClick={this.onClickShowSynchronousModel.bind(this, 'AUDITLOGGING')}>审核记录</Button>}
             </div>
           </div>
-          <div className={'line'}></div>
+          <div className={Style.line}></div>
 
 
             <Table

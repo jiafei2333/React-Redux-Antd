@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card } from 'antd';
 import get from 'lodash/get';
-import './style.less';
+import Style from './style.less';
 import Login from './components/Login';
 import {GET_SITE_CONFIG, GET_THEME_CONFIG, POST_LOGIN_IN} from 'Redux/action-types';
 
@@ -80,19 +80,19 @@ export class LoginIndex extends Component {
         console.log("LoginIndex:---props:", this.props);
         console.log("LoginIndex:---state:",siteConfig, get(siteConfig, "LoginPage.BottomImage"))
         return (
-            <div className='loginIndex' style={loginBgStyle}>
+            <div className={Style.loginIndex} style={loginBgStyle}>
                 <div>
-                <img src={get(siteConfig, "LoginPage.Logo")} className='loginLogo'/>
-                <img src={get(siteConfig, "LoginPage.CenterImage")} className='loginTitle'/>
-                <img  src={get(siteConfig, "LoginPage.BottomImage")} className='loginImg'/>
+                <img src={get(siteConfig, "LoginPage.Logo")} className={Style.loginLogo}/>
+                <img src={get(siteConfig, "LoginPage.CenterImage")} className={Style.loginTitle}/>
+                <img  src={get(siteConfig, "LoginPage.BottomImage")} className={Style.loginImg}/>
                 </div>
-                <div className={'CopyRight'}>
+                <div className={Style.CopyRight}>
                     <p style={{marginBottom: '0'}}> {get(siteConfig,"CopyrightName")}  </p>
                     <p style={{marginBottom: '0'}}> 杭州前方信息技术有限公司 提供技术支持 </p>
                     <p> {get(siteConfig,"ICPName")} </p>
                 </div>
                 <Card
-                    className={'cardMain'}
+                    className={Style.cardMain}
                     tabList={tabListNoTitle}
                     activeTabKey={this.state.noTitleKey}
                     onTabChange={(key) => {
