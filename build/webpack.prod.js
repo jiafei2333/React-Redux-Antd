@@ -12,7 +12,18 @@ module.exports = {
     optimization: { // 优化项
         minimizer: [ // 可以放置压缩方案
             new OptimizeCssAssetsPlugin(), // css压缩，用了这个js也得手动压缩
-            new TerserWebpackPlugin(), // 如果不写这行，js不会压缩成一行
+            // 官方文档 https://github.com/terser/terser
+            new TerserWebpackPlugin({
+                sourceMap: {
+                    filename: "out.js",
+                },
+                terserOptions:{
+                    compress: {
+                        drop_console: true // 去掉所有的console输出
+                    }
+                }
+                
+            }), // 如果不写这行，js不会压缩成一行
         ],
         // splitChunks: {
         //     // initial 只操作同步的，all 所有的，async异步的（默认）

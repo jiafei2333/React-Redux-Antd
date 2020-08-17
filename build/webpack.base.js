@@ -82,12 +82,13 @@ const smwp = new SpeedMeasureWebpackPlugin();
                     use: 'babel-loader',
                     include: path.resolve(__dirname, "../src")
                 },
-                {
+                {   // 我希望当前比较小的图片可以转化成 base64 (缺点是转化后比以前大) 好处就是不用发送http请求
                     test: /\.(png|jpg|gif)$/i,
                     use: [
                       {
                         loader: 'url-loader',
                         options: {
+                          // 如果大于8k（一般是8k）的图片会使用 file-loader
                           limit: 8 * 1024,
                           name: 'image/[contenthash].[ext]',
                         },
