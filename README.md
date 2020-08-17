@@ -1200,7 +1200,7 @@ optimization:{
 - 10.<s>动态加载组件（react-loadable）</s>（完成）
 - 11.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）
 - 12.主题色配置
-- 13.打包问题、引入样式问题
+- 13.<s>打包问题、引入样式问题</s>（完成，开启css module）
 - 14.<s>Source Map配置及知识点</s>（完成）
 - 15.<s>生产环境打包时拷贝web.config文件</s>（完成）
 - 16.登录判断 PrivateRoute
