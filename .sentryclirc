@@ -1,0 +1,6 @@
+[defaults]
+url = http://121.40.178.235:9000/
+org = sentry
+project = react
+[auth]
+token = f4530694b9584adab7c4d8622ae7550f876262e1a2604196a31d753fd6feefb6

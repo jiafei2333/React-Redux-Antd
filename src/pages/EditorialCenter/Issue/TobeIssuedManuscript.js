@@ -117,7 +117,6 @@ class TobeIssuedManuscript extends React.Component{
     })
   }
   searchFun = () => {
-     Sentry.error();
     this.setState({
       PageIndex:1,
     }, function(){

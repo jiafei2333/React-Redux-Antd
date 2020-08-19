@@ -1201,7 +1201,7 @@ optimization:{
 - 11.<s>打包配置-打包分析-打包优化-查看bundle大小 </s>（完成）
 - 12.主题色配置
 - 13.<s>打包问题、引入样式问题</s>（完成，开启css module）
-- 14.Source Map配置+生产环境下配合Sentry
+- 14.<s>Source Map配置+生产环境下配合Sentry</s>（完成）
 - 15.<s>生产环境打包时拷贝web.config文件</s>（完成）
 - 16.登录判断 PrivateRoute
 - 17.图片打包优化，小图片生成base64等

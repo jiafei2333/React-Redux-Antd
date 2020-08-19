@@ -22,7 +22,7 @@ const store = createStore(
     composeEnhancers(
         applyMiddleware(
             routerMiddleware(history),
-            logger,
+            // logger,
             sagaMiddleware // 将sagaMiddleware 中间件传入到 applyMiddleware 函数中
         )
     )

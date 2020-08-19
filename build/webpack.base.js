@@ -19,7 +19,7 @@ const smwp = new SpeedMeasureWebpackPlugin();
     module.exports = (env) =>{
     let isDev = env.development;
     const base = {
-        devtool:isDev?'eval-cheap-module-source-map':false,
+        devtool:isDev?'eval-cheap-module-source-map' : 'source-map', // 'nosources-source-map',
         entry:'./src/index.js',
         output:{
             filename:'[name].[hash].js',

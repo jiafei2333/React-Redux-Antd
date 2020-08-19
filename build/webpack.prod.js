@@ -6,6 +6,9 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 // 拷贝文件
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+// Sentry
+//const SentryPlugin = require('webpack-sentry-plugin');
+const SentryPlugin = require('@sentry/webpack-plugin');
 
 module.exports = {
     mode:'production',
@@ -14,9 +17,6 @@ module.exports = {
             new OptimizeCssAssetsPlugin(), // css压缩，用了这个js也得手动压缩
             // 官方文档 https://github.com/terser/terser
             new TerserWebpackPlugin({
-                sourceMap: {
-                    filename: "out.js",
-                },
                 terserOptions:{
                     compress: {
                         drop_console: true // 去掉所有的console输出
@@ -60,6 +60,23 @@ module.exports = {
             patterns: [
               { from: path.join( __dirname, '../public', 'web.config'), to: path.join( __dirname, '../dist', 'web.config') },
             ],
+        }),
+        // 配置Sentry sourceMap
+        // new SentryPlugin({
+        //     organization: 'sentry',
+        //     project: 'react',
+        //     apiKey: 'f4530694b9584adab7c4d8622ae7550f876262e1a2604196a31d753fd6feefb6',
+        //     include: /\.js.map$/,
+        //     release: 'react@1.0.0',
+        //     // 上传完毕之后删除source map文件
+        //     deleteAfterCompile: true
+        // })
+        new SentryPlugin ({
+            release: "production@1.0.2",//版本号
+            include: path.join(__dirname,'../dist/'), //需要上传到sentry服务器的资源目录,会自动匹配js 以及map文件
+            ignore: ['node_modules'], //忽略文件目录,当然我们在inlcude中制定了文件路径,这个忽略目录可以不加
+            configFile :'.sentryclirc',  
+            urlPrefix : "~/",    //  线上对应的url资源的相对路径 比如我的域名是 http://XXX  .com/,静态资源都在 / 文件夹里面,
         })
     ]
 }
