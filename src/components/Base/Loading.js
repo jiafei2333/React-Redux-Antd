@@ -4,7 +4,8 @@ import Style from './style.less';
 const Loading = ()=>{
     return (
         <div className={Style.loadingBox}>
-            <img src={"/assets/loading.png"} className={Style.loadingImg} />
+            <span className={Style.loadingImg}></span>
+            {/* <img src={'../../assets/loading.png'} className={Style.loadingImg} /> */}
         </div>
     )
 }

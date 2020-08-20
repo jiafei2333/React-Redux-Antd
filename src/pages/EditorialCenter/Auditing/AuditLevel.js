@@ -151,6 +151,7 @@ const AuditLevel = () =>{
     }, []);
     // 状态change
     const selectChange = useCallback((value) => {
+        Sentry.error();
         let _temp = ReviewStatusData.find( item=>{
             return item.Value === value
         });

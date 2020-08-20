@@ -19,7 +19,7 @@ const smwp = new SpeedMeasureWebpackPlugin();
     module.exports = (env) =>{
     let isDev = env.development;
     const base = {
-        devtool:isDev?'eval-cheap-module-source-map' : 'source-map', // 'nosources-source-map',
+        devtool:isDev?'eval-cheap-module-source-map' : '', // 'nosources-source-map',
         entry:'./src/index.js',
         output:{
             filename:'[name].[hash].js',
@@ -83,33 +83,33 @@ const smwp = new SpeedMeasureWebpackPlugin();
                     include: path.resolve(__dirname, "../src")
                 },
                 {   // 我希望当前比较小的图片可以转化成 base64 (缺点是转化后比以前大) 好处就是不用发送http请求
-                    test: /\.(png|jpg|gif)$/i,
+                    test: /\.(png|jpe?g|gif|woff|ttf|eot|svg)$/i,
                     use: [
                       {
                         loader: 'url-loader',
                         options: {
                           // 如果大于8k（一般是8k）的图片会使用 file-loader
                           limit: 8 * 1024,
-                          name: 'image/[contenthash].[ext]',
+                          name: 'images/[contenthash].[ext]',
                         },
                       },
                     ],
                   },
-                {
-                    test: /\.(jpe?g|png|gif)$/,
-                    loader: 'file-loader',
-                    options: {
-                        outputPath: 'assets', // 图片路径
-                        name: '[name].[ext]', // 名字
-                    },
-                },
-                {
-                    // 图标的转化
-                    test: /\.(woff|ttf|eot|svg)$/,
-                    use:{
-                        loader:'file-loader'
-                    }
-                }
+                // {
+                //     test: /\.(jpe?g|png|gif)$/,
+                //     loader: 'file-loader',
+                //     options: {
+                //         outputPath: 'assets', // 图片路径
+                //         name: '[name].[ext]', // 名字
+                //     },
+                // },
+                // {
+                //     // 图标的转化
+                //     test: /\.(woff|ttf|eot|svg)$/,
+                //     use:{
+                //         loader:'file-loader'
+                //     }
+                // }
             ]
         },
         plugins:[ // 执行顺序 从上到下

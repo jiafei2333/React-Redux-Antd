@@ -1204,7 +1204,7 @@ optimization:{
 - 14.<s>Source Map配置+生产环境下配合Sentry</s>（完成）
 - 15.<s>生产环境打包时拷贝web.config文件</s>（完成）
 - 16.登录判断 PrivateRoute
-- 17.图片打包优化，小图片生成base64等
+- 17.<s>图片打包优化，小图片生成base64等</s>（完成，将图片放到样式中用url-loader）
 - 18.生产环境下去掉state状态输出
 
 github项目入口: https://github.com/jiafei2333/React-Redux-Antd
