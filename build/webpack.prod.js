@@ -25,36 +25,47 @@ module.exports = {
                 
             }), // 如果不写这行，js不会压缩成一行
         ],
-        // splitChunks: {
-        //     // initial 只操作同步的，all 所有的，async异步的（默认）
-        //     chunks: 'async', // 默认支持异步的代码分割import()
-        //     minSize: 30000, // 文件超过30k 就会抽离
-        //     maxSize: 0,  // 没有最大上限
-        //     minChunks: 1, // 最少模块引用一次才抽离
-        //     maxAsyncRequests: 5, // 最大异步请求数，最多5个
-        //     maxInitialRequests: 3, // 最大初始化请求数，即最多首屏加载3个请求
-        //     automaticNameDelimiter: '~', // 抽离的命名分隔符 xxx~a~b (如果是a、b文件引用)
-        //     automaticNameMaxLength: 30, // 名字最大长度
-        //     name: true,
-        //     cacheGroups: { // 缓存组  这里面也可以配置上面的配置
-        //         vendors: { // 先抽离第三方
-        //             test: /[\\/]node_modules[\\/]|(lodash)/,
-        //             priority: -1
-        //         },
-        //         react:{
-        //             test: /[\\/]node_modules[\\/](react|react-dom)/,
-        //             priority: -2, 
-        //         },
-        //         default: { 
-        //             minChunks: 2,
-        //             priority: -20, // 优先级, -2比 -20大
-        //             reuseExistingChunk: true
-        //         }
-        //     }
-        // }
+        splitChunks: {
+            // initial 只操作同步的，all 所有的，async异步的（默认）
+            chunks: 'async', // 默认支持异步的代码分割import()
+            minSize: 20000, // 文件超过30k 就会抽离
+            maxSize: 0,  // 没有最大上限
+            minChunks: 1, // 最少模块引用一次才抽离
+            maxAsyncRequests: 5, // 最大异步请求数，最多5个
+            maxInitialRequests: 3, // 最大初始化请求数，即最多首屏加载3个请求
+            automaticNameDelimiter: '~', // 抽离的命名分隔符 xxx~a~b (如果是a、b文件引用)
+            automaticNameMaxLength: 30, // 名字最大长度
+            name: true,
+            cacheGroups: { // 缓存组  这里面也可以配置上面的配置
+                // vendors: { // 先抽离第三方
+                //     test: /[\\/]node_modules[\\/](lodash)/,
+                //     name: "vendors",
+                //     priority: -1
+                // },
+                // react:{
+                //     test: /[\\/]node_modules[\\/](react|react-dom)/,
+                //     name: "vendors-react",
+                //     priority: -2, 
+                // },
+                reactBase: {
+                    name: 'reactBase',
+                    test: (module) => {
+                        // 这样配置其实有个问题， 匹配react时，会将react...符合的都匹配出来，但是用 test: /[\\/]node_modules[\\/](react|react-dom)/, 的方式又匹配不上，怀疑是当我webpack配置文件和 /node_modules/文件夹路径，不是当前下的，然后这样匹配也会把src/redux这种匹配出来，不可取
+                        return /react|redux|react-dom|react-router-dom|lodash/.test(module.context);
+                    },
+                    chunks: 'initial',
+                    priority: 10,
+                },
+                default: { 
+                    minChunks: 2,
+                    priority: -20, // 优先级, -2比 -20大
+                    reuseExistingChunk: true
+                }
+            }
+        }
     },
     plugins:[
-        // new BundleAnalyzerPlugin(), // 打包分析
+        new BundleAnalyzerPlugin(), // 打包分析
         // 生产环境下拷贝web.config 到dist下
         new CopyWebpackPlugin({
             patterns: [
